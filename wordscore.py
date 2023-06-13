@@ -6,7 +6,7 @@ scores = {
     "x": 8, "z": 10
 }
 
-def score_word(word):
+def score_word(word, wildcard_count=0, memo={}):
     """
     Calculates the score of a given word based on letter scores.
 
@@ -15,12 +15,38 @@ def score_word(word):
 
     Args:
         word (str): The word for which to calculate the score.
+        wildcard_count (int): The number of wildcard characters encountered.
+        memo (dict): A dictionary to store previously computed scores.
+
+    Returns:
+        int: The score of the word.
     """
-    total_score = 0
-    for letter in word:
-        total_score += scores.get(letter.lower(), 0)
-    if '*' in word and '?' in word:
+    if wildcard_count == 2:
         return 0
+
+    if word in memo:
+        return memo[word]
+
+    total_score = 0
+    max_score = 0
+
+    for i, letter in enumerate(word):
+        if letter == '*' or letter == '?':
+            if wildcard_count == 0:
+                score_with_wildcard = score_word(word[:i] + word[i + 1:], wildcard_count + 1, memo)
+                max_score = max(max_score, score_with_wildcard)
+        else:
+            total_score += scores.get(letter.lower(), 0)
+
+    if wildcard_count == 1:
+        for letter in scores.keys():
+            word_with_wildcard = word.replace('*', letter).replace('?', letter)
+            score_with_wildcard = score_word(word_with_wildcard, wildcard_count + 1, memo)
+            max_score = max(max_score, score_with_wildcard)
+
+    total_score = max(total_score, max_score)
+    memo[word] = total_score
+
     return total_score
 
 
