@@ -23,7 +23,7 @@ def find_matching_words(rack, data):
 
 
 def run_scrabble(word=None): 
-    with open("C:\\Users\\davidilitzky.REDMOND\\Berkeley\\sowpods.txt", "r") as infile: #Reads the sowpods text file in local directory 
+    with open("sowpods.txt", "r") as infile: #Reads the sowpods text file in local directory 
         raw_input = infile.readlines()
         data = [datum.strip('\n') for datum in raw_input]
     if word is None:
