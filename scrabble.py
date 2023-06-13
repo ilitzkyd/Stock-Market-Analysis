@@ -1,3 +1,5 @@
+
+from wordscore import score_word  # Imports score_word function from wordscore.py file
 def find_matching_words(rack, data):
     rack = rack.upper()
     matching_words = []
