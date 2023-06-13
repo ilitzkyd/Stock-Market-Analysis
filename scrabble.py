@@ -42,7 +42,8 @@ def run_scrabble(word=None):
     if len(rack) > 7:
         return "Error: Rack cannot have more than 7 letters. Please only have 7 letters", ""
 
-    with open("C:\\Users\davidilitzky.REDMOND\\Berkeley\\sowpods.txt", "r") as infile:
+#file_name="C:\\Users\davidilitzky.REDMOND\\Berkeley\\sowpods.txt"
+    with open("sowpods.txt", "r") as infile:
         raw_input = infile.readlines()
         data = [datum.strip('\n') for datum in raw_input]
 
