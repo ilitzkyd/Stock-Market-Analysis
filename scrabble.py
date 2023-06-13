@@ -27,35 +27,27 @@ def run_scrabble(word=None):
         raw_input = infile.readlines()
         data = [datum.strip('\n') for datum in raw_input]
     if word is None:
-        print("Error: No input has been provided")
-        print("Please enter a rack")
-        return 
+        return "Error: No input has been provided. Please enter a rack", ""
     if len(word) == 1:  # Check if the rack contains only 1 letter
-        print("Error: The rack should be more than a letter")
-        print("Please input more than 1 letter")
-        return 
+        return "Error: The rack should be more than a letter. Please input more than 1 letter", ""
     rack = word.upper()
     if rack.count('*') + rack.count('?') > 2:  # Check if the rack contains more than 2 wildcards
-        print("Error: Rack cannot have more than 2 wildcards.")
-        print("Please only have 2 wildcards")
+        return "Error: Rack cannot have more than 2 wildcards. Please only have 2 wildcards", ""
     if len(rack) > 7:
-        print("Error: Rack cannot have more than 7 letters.")
-        print("Please only have 7 letters")
-        return
+        return "Error: Rack cannot have more than 7 letters. Please only have 7 letters", ""
     if not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in word):
-        print("Error: The word should contain alphabetical characters or wildcards (*,?)")
-        print("Please enter the word again by removing the non-alphabetical letters")
-        return
+        return "Error: The word should contain alphabetical characters or wildcards (*, ?). Please enter the word again by removing the non-alphabetical letters", ""
+
     if not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in rack):
-        print("Error: The letter rack should contain alphabetical characters or wildcards (*,?)")
-        print("Please enter the rack again by removing the non-alphabetical letters")
-        return
+        return "Error: The letter rack should contain alphabetical characters or wildcards (*, ?). Please enter the rack again by removing the non-alphabetical letters", ""
+
 
 
     matching_words = find_matching_words(word, data) #call the matching words function to text file and stores them 
     if not matching_words:
-        return 
-    
+        return "", 0
+     
+
     word_scores = [(word, score_word(word)) for word in matching_words]
 
     # Sort the list by score in descending order
