@@ -76,7 +76,7 @@ def main():
     if isinstance(result, str):
         print(result)  # Print the error message
     else:
-        grouped_words = [f"({score}, '{word}')" for word, score in result]
+        grouped_words = [f"({word}, '{score}')" for word, score in result]
         output = "[\n" + ",\n".join(grouped_words) + "\n]"
         print(f"(\n{output},\n{matching_words}\n)")
 
