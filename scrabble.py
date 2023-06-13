@@ -32,24 +32,28 @@ def run_scrabble(word=None):
             - The count of matching words.
     """
     if word is None:
-        return "Error: No input has been provided. Please enter a rack", ""
+        raise ValueError("No input has been provided. Please enter a rack")
 
     rack = word.upper()
-
     if not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in word):
-        return "Error: The word should contain alphabetical characters or wildcards (*, ?). Please enter the word again by removing the non-alphabetical letters", ""
+        raise ValueError("The word should contain alphabetical characters or wildcards (*, ?). Please enter the word again by removing the non-alphabetical letters")
+
+
 
     if not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in rack):
-        return "Error: The letter rack should contain alphabetical characters or wildcards (*, ?). Please enter the rack again by removing the non-alphabetical letters", ""
+        raise ValueError("The letter rack should contain alphabetical characters or wildcards (*, ?). Please enter the rack again by removing the non-alphabetical letters")
+
 
     if len(word) == 1:
-        return "Error: The rack should be more than a letter. Please input more than 1 letter", ""
+        raise ValueError("The rack should be more than a letter. Please input more than 1 letter")
+
 
     if rack.count('*') + rack.count('?') > 2:
-        return "Error: Rack cannot have more than 2 wildcards. Please only have 2 wildcards", ""
+        raise ValueError("Rack cannot have more than 2 wildcards. Please only have 2 wildcards")
+
 
     if len(rack) > 7:
-        return "Error: Rack cannot have more than 7 letters. Please only have 7 letters", ""
+        raise ValueError("Rack cannot have more than 7 letters. Please only have 7 letters")
 
     with open("sowpods.txt", "r") as infile:
         raw_input = infile.readlines()
@@ -69,7 +73,7 @@ def run_scrabble(word=None):
     return grouped_words, len(matching_words)
 
 def main():
-    rack = "****"
+    rack = "*?"
     result, matching_words = run_scrabble(rack)
 
     if isinstance(result, str):
