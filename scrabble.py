@@ -1,5 +1,3 @@
-from wordscore import score_word  # Imports score_word function from wordscore.py file
-
 def find_matching_words(rack, data):
     rack = rack.upper()
     matching_words = []
@@ -21,9 +19,7 @@ def find_matching_words(rack, data):
         return []
     return matching_words
 
-
 def run_scrabble(word=None):
-
     """
     Runs the Scrabble game for a given word or letter rack.
     The function checks the validity of the input word or rack, performs error checks,
@@ -53,7 +49,7 @@ def run_scrabble(word=None):
     if len(rack) > 7:
         return "Error: Rack cannot have more than 7 letters. Please only have 7 letters", ""
 
-    with open("C:\\Users\\davidilitzky.REDMOND\\Berkeley\\sowpods.txt", "r") as infile:
+    with open("sowpods.txt", "r") as infile:
         raw_input = infile.readlines()
         data = [datum.strip('\n') for datum in raw_input]
 
@@ -71,8 +67,6 @@ def run_scrabble(word=None):
 
     return grouped_words, len(matching_words)
 
-
-
 rack = "****"
 result, matching_words = run_scrabble(rack)
 
@@ -82,7 +76,3 @@ else:
     grouped_words = [f"({score}, '{word}')" for word, score in result]
     output = "[\n" + ",\n".join(grouped_words) + "\n]"
     print(f"(\n{output},\n{matching_words}\n)")
-
-
-
-
