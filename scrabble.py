@@ -1,5 +1,5 @@
-
 from wordscore import score_word  # Imports score_word function from wordscore.py file
+
 def find_matching_words(rack, data):
     rack = rack.upper()
     matching_words = []
@@ -65,8 +65,7 @@ def run_scrabble(word=None):
     if len(word_scores) == 1 and word_scores[0][1] == 0:
          return 0, len(matching_words)
 
-    grouped_words = word_scores  # Store all word-score pairs directly
-
+    grouped_words = [(score, word) for word, score in word_scores]  # Swap the position of word and score
     return grouped_words, len(matching_words)
 
 def main():
@@ -76,7 +75,7 @@ def main():
     if isinstance(result, str):
         print(result)  # Print the error message
     else:
-        grouped_words = [f"({word}, '{score}')" for word, score in result]
+        grouped_words = [f"({score}, '{word}')" for score, word in result]  # Swap the position of score and word
         output = "[\n" + ",\n".join(grouped_words) + "\n]"
         print(f"(\n{output},\n{matching_words}\n)")
 
