@@ -55,7 +55,7 @@ def run_scrabble(word=None):
 
     if word == "*?":
         return 0, 0
-#"C:\\Users\davidilitzky.REDMOND\\Berkeley\\sowpods.txt
+
     with open("sowpods.txt", "r") as infile:
         raw_input = infile.readlines()
         data = [datum.strip('\n') for datum in raw_input]
@@ -79,11 +79,3 @@ def run_scrabble(word=None):
             grouped_words.append((score, word))
 
     return grouped_words, len(matching_words)
-
-
-word = "ZAEfiee"
-if word == "*?":
-    print(0)
-else:
-    result = run_scrabble(word)
-    print(result)
