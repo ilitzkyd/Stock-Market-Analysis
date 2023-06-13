@@ -80,7 +80,7 @@ def run_scrabble(word=None):
 
 
 def main():
-    word = "AB"
+    word = []
     run_scrabble(word)
 
 
