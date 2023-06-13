@@ -7,6 +7,15 @@ scores = {
 }
 
 def score_word(word):
+    """
+    Calculates the score of a given word based on letter scores.
+
+    The function calculates the score of a word by summing the individual scores
+    of its letters. The scores for each letter are defined in the 'scores' dictionary.
+
+    Args:
+        word (str): The word for which to calculate the score.
+    """
     total_score = 0
     for letter in word:
         total_score += scores.get(letter.lower(), 0)
