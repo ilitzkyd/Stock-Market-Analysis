@@ -29,11 +29,11 @@ def run_scrabble(word=None):
     if word is None:
         print("Error: No input has been provided")
         print("Please enter a rack")
-        return [], 0
+        return 
     if len(word) == 1:  # Check if the rack contains only 1 letter
         print("Error: The rack should be more than a letter")
         print("Please input more than 1 letter")
-        return [], 0
+        return 
     rack = word.upper()
     if rack.count('*') + rack.count('?') > 2:  # Check if the rack contains more than 2 wildcards
         print("Error: Rack cannot have more than 2 wildcards.")
@@ -41,24 +41,20 @@ def run_scrabble(word=None):
     if len(rack) > 7:
         print("Error: Rack cannot have more than 7 letters.")
         print("Please only have 7 letters")
-        return [], 0
+        return
     if not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in word):
         print("Error: The word should contain alphabetical characters or wildcards (*,?)")
         print("Please enter the word again by removing the non-alphabetical letters")
-        return[],0
+        return
     if not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in rack):
         print("Error: The letter rack should contain alphabetical characters or wildcards (*,?)")
         print("Please enter the rack again by removing the non-alphabetical letters")
-        return[],0
-    result = run_scrabble(word)
-    if result == ([], 0):
-        print("Test Passed: Error message returned for rack with more than 7 letters")
-    else:
-        print("Test Failed: No error message returned by the run_scrabble function")
+        return
+
 
     matching_words = find_matching_words(word, data) #call the matching words function to text file and stores them 
     if not matching_words:
-        return [], 0
+        return 
     
     word_scores = [(word, score_word(word)) for word in matching_words]
 
