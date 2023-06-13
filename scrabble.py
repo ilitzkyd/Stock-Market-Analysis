@@ -50,6 +50,11 @@ def run_scrabble(word=None):
         print("Error: The letter rack should contain alphabetical characters or wildcards (*,?)")
         print("Please enter the rack again by removing the non-alphabetical letters")
         return[],0
+    result = run_scrabble(word)
+    if result == ([], 0):
+        print("Test Passed: Error message returned for rack with more than 7 letters")
+    else:
+        print("Test Failed: No error message returned by the run_scrabble function")
 
     matching_words = find_matching_words(word, data) #call the matching words function to text file and stores them 
     if not matching_words:
