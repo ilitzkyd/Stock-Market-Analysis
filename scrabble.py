@@ -23,6 +23,19 @@ def find_matching_words(rack, data):
 
 
 def run_scrabble(word=None):
+    """
+    Runs the Scrabble game for a given word or letter rack.
+
+    The function checks the validity of the input word or rack, performs error checks,
+    and returns error messages if necessary. If the input is valid, it proceeds to find
+    matching words and calculates their scores.
+
+    Returns:
+            - A list of grouped words and their scores, sorted in descending order.
+            - The count of matching words.
+
+ 
+     """   
     if word is None:
         return "Error: No input has been provided. Please enter a rack", ""
 
