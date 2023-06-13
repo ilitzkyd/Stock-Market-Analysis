@@ -67,12 +67,16 @@ def run_scrabble(word=None):
 
     return grouped_words, len(matching_words)
 
-rack = "****"
-result, matching_words = run_scrabble(rack)
+def main():
+    rack = "****"
+    result, matching_words = run_scrabble(rack)
 
-if isinstance(result, str):
-    print(result)  # Print the error message
-else:
-    grouped_words = [f"({score}, '{word}')" for word, score in result]
-    output = "[\n" + ",\n".join(grouped_words) + "\n]"
-    print(f"(\n{output},\n{matching_words}\n)")
+    if isinstance(result, str):
+        print(result)  # Print the error message
+    else:
+        grouped_words = [f"({score}, '{word}')" for word, score in result]
+        output = "[\n" + ",\n".join(grouped_words) + "\n]"
+        print(f"(\n{output},\n{matching_words}\n)")
+
+if __name__ == "__main__":
+    main()
