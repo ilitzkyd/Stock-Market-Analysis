@@ -48,6 +48,3 @@ def score_word(word, wildcard_count=0, memo={}):
     memo[word] = total_score
 
     return total_score
-
-
-
