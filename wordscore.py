@@ -5,16 +5,11 @@ scores = {"a": 1, "c": 3, "b": 3, "e": 1, "d": 2, "g": 2,
          "x": 8, "z": 10}
 
 def score_word(word):
-     if word == "**" or word == "??":
-        return 0
-     total_score = 0
-     for letter in word:
-        if letter == "*" or letter == "?":
-            total_score += 0
-        else:
-            total_score += scores.get(letter.lower(), 0)
-        return total_score
-  
+
+    total_score = 0
+    for letter in word:
+        total_score += scores.get(letter.lower(), 0)
+    return total_score
 
 
 
