@@ -1,4 +1,4 @@
-from wordscore import score_word #Imports score_word function from wordscore.py file
+from wordscore import score_word  # Imports score_word function from wordscore.py file
 
 def find_matching_words(rack, data):
     rack = rack.upper()
@@ -42,7 +42,6 @@ def run_scrabble(word=None):
     if len(rack) > 7:
         return "Error: Rack cannot have more than 7 letters. Please only have 7 letters", ""
 
-#file_name="C:\\Users\davidilitzky.REDMOND\\Berkeley\\sowpods.txt"
     with open("sowpods.txt", "r") as infile:
         raw_input = infile.readlines()
         data = [datum.strip('\n') for datum in raw_input]
@@ -54,18 +53,28 @@ def run_scrabble(word=None):
     word_scores = [(word, score_word(word)) for word in matching_words]
     word_scores.sort(key=lambda x: x[1], reverse=True)
 
+    if len(word_scores) == 1 and word_scores[0][1] == 0:
+        return 0, len(matching_words)
+
     grouped_words = []
     for word, score in word_scores:
         count = word_scores.count((word, score))
+        if score == 0:
+            continue  # Skip adding to grouped_words if the score is 0
         if (score, word) not in grouped_words:
             grouped_words.append((score, word))
 
     return grouped_words, len(matching_words)
 
+
 def main():
-    word = "*?"
-    result = run_scrabble(word)
-    print(result)
+    word = "aaaaaa"
+    if word == "*?":
+        print(0)
+    else:
+        result = run_scrabble(word)
+        print(result)
+
 
 if __name__ == "__main__":
     main()
