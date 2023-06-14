@@ -32,7 +32,7 @@ def run_scrabble(word=None):
             - The count of matching words.
     """
     if word is None:
-        raise ValueError("No input has been provided. Please enter a rack")
+        raise Exception("No input has been provided. Please enter a rack")
 
     rack = word.upper()
     if not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in word):
@@ -41,7 +41,7 @@ def run_scrabble(word=None):
 
 
     if not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in rack):
-        raise ValueError("The letter rack should contain alphabetical characters or wildcards (*, ?). Please enter the rack again by removing the non-alphabetical letters")
+        raise Exception("The letter rack should contain alphabetical characters or wildcards (*, ?). Please enter the rack again by removing the non-alphabetical letters")
 
 
     if len(word) == 1:
@@ -49,7 +49,7 @@ def run_scrabble(word=None):
 
 
     if rack.count('*') + rack.count('?') > 2:
-        raise ValueError("Rack cannot have more than 2 wildcards. Please only have 2 wildcards")
+        raise Exception("Rack cannot have more than 2 wildcards. Please only have 2 wildcards")
 
 
     if len(rack) > 7:
@@ -73,7 +73,7 @@ def run_scrabble(word=None):
     return grouped_words, len(matching_words)
 
 def main():
-    rack = "aaaaaaaa"
+    rack = "***"
     result, matching_words = run_scrabble(rack)
     
     try:
