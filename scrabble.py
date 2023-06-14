@@ -10,15 +10,17 @@ def find_matching_words(rack, data):
         for letter in word:
             if letter in rack_letters:
                 rack_letters.remove(letter)
-            elif '*' in rack_letters or '?' in rack_letters:
-                rack_letters.remove('*') if '*' in rack_letters else rack_letters.remove('?')
+            elif '*' in rack_letters:
+                 rack_letters.remove('*') 
+            elif '?' in rack_letters:
+                 rack_letters.remove('?')
             else:
                 valid_word = False
                 break
         if valid_word:
             matching_words.append(word)
-    if len(rack) == 2 and all(char in ("*", "?") for char in rack):
-        return []
+    #if len(rack) == 2 and all(char in ("*", "?") for char in rack):
+    #    return []
     return matching_words
 
 def run_scrabble(word):
@@ -41,12 +43,13 @@ def run_scrabble(word):
     elif rack.count('*')> 1 or  rack.count('?') > 1:
         return "Error: Rack cannot have more than 2 wildcards. Please only have 2 wildcards"
     
-    elif any(char.isdigit() or char.isalpha() or char in ("*","?") for char in rack):
+    elif any(char.isdigit() for char in rack):
     #if not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in rack)
         return "The word should contain alphabetical characters or wildcards (*, ?). Please enter the word again by removing the non-alphabetical letters"
-
+    elif not all(char.isalpha() or char in ("*", "?") for char in rack):
+        return ("Please enter a valid wildcard")
     else: 
-
+#"C:\Users\davidilitzky.REDMOND\Berkeley\sowpods.txt"
         with open("sowpods.txt", "r") as infile:
             raw_input = infile.readlines()
             data = [datum.strip('\n') for datum in raw_input]
@@ -65,7 +68,7 @@ def run_scrabble(word):
         return grouped_words, len(matching_words)
 
 def main():
-    rack = "%%"
+    rack = "@%"
     result = run_scrabble(rack)
     #grouped_words = [f"({score}, '{word}')" for score, word in result]  # Swap the position of score and word
     #output = "[\n" + ",\n".join(grouped_words) + "\n]"
