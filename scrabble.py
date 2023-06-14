@@ -21,7 +21,7 @@ def find_matching_words(rack, data):
         return []
     return matching_words
 
-def run_scrabble(word=None):
+def run_scrabble(word):
     """
     Runs the Scrabble game for a given word or letter rack.
     The function checks the validity of the input word or rack, performs error checks,
@@ -31,44 +31,40 @@ def run_scrabble(word=None):
             - A list of grouped words and their scores, sorted in descending order.
             - The count of matching words.
     """
-    if word is None:
-        raise ValueError("No input has been provided. Please enter a rack")
-
     rack = word.upper()
-    if not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in word):
+    if len(rack) < 2:
+        raise ValueError("Error: Rack needs to have more 2 letters. Please have more than 2 letters")
+    
+    elif len(rack) > 7:
+        raise ValueError("Error: Rack cannot have more than 7 letters. Please only have 7 letters")
+    
+    elif rack.count('*') + rack.count('?') > 2:
+        raise ValueError("Error: Rack cannot have more than 2 wildcards. Please only have 2 wildcards")
+    
+    elif not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in word):
         raise ValueError("The word should contain alphabetical characters or wildcards (*, ?). Please enter the word again by removing the non-alphabetical letters")
 
-    if not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in rack):
-        raise ValueError("The letter rack should contain alphabetical characters or wildcards (*, ?). Please enter the rack again by removing the non-alphabetical letters")
+    else: 
 
-    if len(word) == 1:
-        raise ValueError("The rack should be more than a letter. Please input more than 1 letter")
+        with open("sowpods.txt", "r") as infile:
+            raw_input = infile.readlines()
+            data = [datum.strip('\n') for datum in raw_input]
 
-    if rack.count('*') + rack.count('?') > 2:
-        raise ValueError("Rack cannot have more than 2 wildcards. Please only have 2 wildcards")
+        matching_words = find_matching_words(word, data)
+        if not matching_words:
+            return [], 0
 
-    if len(rack) > 7:
-        raise ValueError("Rack cannot have more than 7 letters. Please only have 7 letters")
+        word_scores = [(word, score_word(word)) for word in matching_words]
+        word_scores.sort(key=lambda x: x[1], reverse=True)
 
-    with open("sowpods.txt", "r") as infile:
-        raw_input = infile.readlines()
-        data = [datum.strip('\n') for datum in raw_input]
+        if len(word_scores) == 1 and word_scores[0][1] == 0:
+            return [], len(matching_words)
 
-    matching_words = find_matching_words(word, data)
-    if not matching_words:
-        return [], 0
-
-    word_scores = [(word, score_word(word)) for word in matching_words]
-    word_scores.sort(key=lambda x: x[1], reverse=True)
-
-    if len(word_scores) == 1 and word_scores[0][1] == 0:
-        return [], len(matching_words)
-
-    grouped_words = [(score, word) for word, score in word_scores]  # Swap the position of word and score
-    return grouped_words, len(matching_words)
+        grouped_words = [(score, word) for word, score in word_scores]  # Swap the position of word and score
+        return grouped_words, len(matching_words)
 
 def main():
-    rack = "****"
+    rack = "aa"
     
     try:
         result, matching_words = run_scrabble(rack)
