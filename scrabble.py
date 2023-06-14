@@ -73,11 +73,13 @@ def run_scrabble(word=None):
     return grouped_words, len(matching_words)
 
 def main():
-    rack = "***"
+    rack = "aaaaaaaa"
     result, matching_words = run_scrabble(rack)
-
-    if isinstance(result, str):
-        print(result)  # Print the error message
+    
+    try:
+        result, matching_words = run_scrabble(rack)
+    except ValueError as e:
+        print(e)  # Print the error message
     else:
         grouped_words = [f"({score}, '{word}')" for score, word in result]  # Swap the position of score and word
         output = "[\n" + ",\n".join(grouped_words) + "\n]"
