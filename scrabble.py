@@ -41,7 +41,8 @@ def run_scrabble(word):
     elif rack.count('*')> 1 or  rack.count('?') > 1:
         return "Error: Rack cannot have more than 2 wildcards. Please only have 2 wildcards"
     
-    elif any(char.isdigit() for char in rack):
+    elif any(char.isdigit() or char.isalpha() or char in ("*","?") for char in rack):
+    #if not all(char.isalpha() or char in ("*", "?") or char.isdigit() for char in rack)
         return "The word should contain alphabetical characters or wildcards (*, ?). Please enter the word again by removing the non-alphabetical letters"
 
     else: 
@@ -64,7 +65,7 @@ def run_scrabble(word):
         return grouped_words, len(matching_words)
 
 def main():
-    rack = "213133"
+    rack = "%%"
     result = run_scrabble(rack)
     #grouped_words = [f"({score}, '{word}')" for score, word in result]  # Swap the position of score and word
     #output = "[\n" + ",\n".join(grouped_words) + "\n]"
