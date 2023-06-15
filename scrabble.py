@@ -50,7 +50,7 @@ def run_scrabble(word):
         return ("Please enter a valid wildcard")
     else: 
 #"C:\Users\davidilitzky.REDMOND\Berkeley\sowpods.txt"
-        with open("sowpods.txt", "r") as infile:
+        with open("C:\\Users\\davidilitzky.REDMOND\\Berkeley\\sowpods.txt", "r") as infile:
             raw_input = infile.readlines()
             data = [datum.strip('\n') for datum in raw_input]
 
@@ -58,7 +58,7 @@ def run_scrabble(word):
         if not matching_words:
             return [], 0
 
-        word_scores = [(word, score_word(word)) for word in matching_words]
+        word_scores = [(word, score_word(word,rack)) for word in matching_words]
         word_scores.sort(key=lambda x: x[1], reverse=True)
 
         if len(word_scores) == 1 and word_scores[0][1] == 0:
@@ -68,7 +68,7 @@ def run_scrabble(word):
         return grouped_words, len(matching_words)
 
 def main():
-    rack = "@%"
+    rack = "?a"
     result = run_scrabble(rack)
     #grouped_words = [f"({score}, '{word}')" for score, word in result]  # Swap the position of score and word
     #output = "[\n" + ",\n".join(grouped_words) + "\n]"
