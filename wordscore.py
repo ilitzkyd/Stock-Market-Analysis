@@ -1,12 +1,5 @@
-scores = {
-    "a": 1, "c": 3, "b": 3, "e": 1, "d": 2, "g": 2,
-    "f": 4, "i": 1, "h": 4, "k": 5, "j": 8, "m": 3,
-    "l": 1, "o": 1, "n": 1, "q": 10, "p": 3, "s": 1,
-    "r": 1, "u": 1, "t": 1, "w": 4, "v": 4, "y": 4,
-    "x": 8, "z": 10
-}
 
-def score_word(word, wildcard_count=0, memo={}):
+def score_word(word, rack):
     """
     Calculates the score of a given word based on letter scores.
 
@@ -21,30 +14,18 @@ def score_word(word, wildcard_count=0, memo={}):
     Returns:
         int: The score of the word.
     """
-    if wildcard_count == 2:
-        return 0
+    scores = {
+    "a": 1, "c": 3, "b": 3, "e": 1, "d": 2, "g": 2,
+    "f": 4, "i": 1, "h": 4, "k": 5, "j": 8, "m": 3,
+    "l": 1, "o": 1, "n": 1, "q": 10, "p": 3, "s": 1,
+    "r": 1, "u": 1, "t": 1, "w": 4, "v": 4, "y": 4,
+    "x": 8, "z": 10
+    }
 
-    if word in memo:
-        return memo[word]
-
-    total_score = 0
-    max_score = 0
-
-    for i, letter in enumerate(word):
-        if letter == '*' or letter == '?':
-            if wildcard_count == 0:
-                score_with_wildcard = score_word(word[:i] + word[i + 1:], wildcard_count + 1, memo)
-                max_score = max(max_score, score_with_wildcard)
-        else:
-            total_score += scores.get(letter.lower(), 0)
-
-    if wildcard_count == 1:
-        for letter in scores.keys():
-            word_with_wildcard = word.replace('*', letter).replace('?', letter)
-            score_with_wildcard = score_word(word_with_wildcard, wildcard_count + 1, memo)
-            max_score = max(max_score, score_with_wildcard)
-
-    total_score = max(total_score, max_score)
-    memo[word] = total_score
-
-    return total_score
+    score = 0 
+    rack = list(rack.lower())
+    for char in word.lower(): 
+        if char in rack: 
+            score += scores[char]   
+            rack.remove(char)
+    return score 
