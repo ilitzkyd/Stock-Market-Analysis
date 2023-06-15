@@ -50,7 +50,7 @@ def run_scrabble(word):
         return ("Please enter a valid wildcard")
     else: 
 #"C:\Users\davidilitzky.REDMOND\Berkeley\sowpods.txt"
-        with open("C:\\Users\\davidilitzky.REDMOND\\Berkeley\\sowpods.txt", "r") as infile:
+        with open("sowpods.txt", "r") as infile:
             raw_input = infile.readlines()
             data = [datum.strip('\n') for datum in raw_input]
 
