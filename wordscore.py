@@ -8,8 +8,6 @@ def score_word(word, rack):
 
     Args:
         word (str): The word for which to calculate the score.
-        wildcard_count (int): The number of wildcard characters encountered.
-        memo (dict): A dictionary to store previously computed scores.
 
     Returns:
         int: The score of the word.
