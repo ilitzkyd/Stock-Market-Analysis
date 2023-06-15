@@ -19,8 +19,6 @@ def find_matching_words(rack, data):
                 break
         if valid_word:
             matching_words.append(word)
-    #if len(rack) == 2 and all(char in ("*", "?") for char in rack):
-    #    return []
     return matching_words
 
 def run_scrabble(word):
@@ -49,7 +47,6 @@ def run_scrabble(word):
     elif not all(char.isalpha() or char in ("*", "?") for char in rack):
         return ("Please enter a valid wildcard")
     else: 
-#"C:\Users\davidilitzky.REDMOND\Berkeley\sowpods.txt"
         with open("sowpods.txt", "r") as infile:
             raw_input = infile.readlines()
             data = [datum.strip('\n') for datum in raw_input]
@@ -70,8 +67,6 @@ def run_scrabble(word):
 def main():
     rack = "?a"
     result = run_scrabble(rack)
-    #grouped_words = [f"({score}, '{word}')" for score, word in result]  # Swap the position of score and word
-    #output = "[\n" + ",\n".join(grouped_words) + "\n]"
     print(result)
 if __name__ == "__main__":
     main()
