@@ -13,7 +13,7 @@ def count_retweets_by_username(tweet_list):
     return {}
 
 
-#import numpy as np
+import numpy as np
 def display(deposits, top, bottom, left, right):
     """display a subgrid of the land, with rows starting at top and up to 
     but not including bottom, and columns starting at left and up to but
