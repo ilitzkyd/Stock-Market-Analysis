@@ -23,7 +23,7 @@ def display(deposits, top, bottom, left, right):
     for i, j, _ in deposits: 
         if top <= i < bottom and left <= j < right:
             square[i - top][j - left] = 'X'
-    return '\n'.join(map(' '.join, square))
+    return '\n'.join(map(''.join, square))
 
 
 
