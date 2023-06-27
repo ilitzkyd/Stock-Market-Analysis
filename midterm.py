@@ -13,15 +13,16 @@ def count_retweets_by_username(tweet_list):
     return {}
 
 
-import numpy as np
 def display(deposits, top, bottom, left, right):
-    """display a subgrid of the land, with rows starting at top and up to 
+    """Display a subgrid of the land, with rows starting at top and up to 
     but not including bottom, and columns starting at left and up to but
     not including right."""
-    square = np.full((bottom - top, right - left), '-')
-    for i,j, _ in deposits: 
+    symbol = '-'
+    square = [[symbol] * (right - left) 
+                for _ in range(bottom - top)]
+    for i, j, _ in deposits: 
         if top <= i < bottom and left <= j < right:
-            square[i - top,j - left] = 'X'
+            square[i - top][j - left] = 'X'
     return '\n'.join(map(' '.join, square))
 
 
