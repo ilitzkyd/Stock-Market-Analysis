@@ -1,5 +1,4 @@
-################################
-#####Problem 1 
+
 def count_retweets_by_username(tweet_list):
     """ (list of tweets) -> dict of {username: int}
     Returns a dictionary in which each key is a username that was 
@@ -14,8 +13,7 @@ def count_retweets_by_username(tweet_list):
     return {}
 
 
-##########################
-#Problem 2
+
 import numpy as np
 def display(deposits, top, bottom, left, right):
     """display a subgrid of the land, with rows starting at top and up to 
@@ -25,7 +23,7 @@ def display(deposits, top, bottom, left, right):
     for i,j, _ in deposits: 
         if top <= i < bottom and left <= j < right:
             square[i - top,j - left] = 'X'
-    return '\n'.join(mp(' '.join, square))
+    return '\n'.join(map(' '.join, square))
 
 
 
@@ -36,9 +34,6 @@ def tons_inside(deposits, top, bottom, left, right):
     less than right."""
     return sum(tons for i, j, tons in deposits if top <= i < bottom and left <= j < right)
 
-
-#########################
-####Problem 3 
 
 def birthday_count(dates_list):
     """Total number of birthday pairs in a list by counting each pair only once"""
