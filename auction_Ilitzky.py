@@ -50,7 +50,7 @@ class Auction:
     def execute_round(self):
         """
         Round to determine the outcome once a bidder places a bid
-         """
+        """
         for bidder in self.bidders:
             user_id = 0  # Only one user, so the ID is always 0
             bid_amount = bidder.bid(user_id)
@@ -58,37 +58,36 @@ class Auction:
             not_current_bidder = [bid for bid in self.bidders if bid != bidder]
             other_bidder = random.choice(not_current_bidder) if not_current_bidder else None
 
-        if adv and other_bidder:
-            additional_bidder = other_bidder
+            if adv and other_bidder:
+                additional_bidder = other_bidder
 
-            if additional_bidder:
-                additional_amount = additional_bidder.bid(user_id)
+                if additional_bidder:
+                    additional_amount = additional_bidder.bid(user_id)
 
-                if additional_amount < bid_amount:
-                    bidder.notify(auction_winner=True, price=additional_amount, clicked=None)
-                    additional_bidder.notify(auction_winner=False, price=additional_amount, clicked=None)  # Change clicked status to None for additional bidder
+                    if additional_amount < bid_amount:
+                        bidder.notify(auction_winner=True, price=additional_amount, clicked=None)
+                        additional_bidder.notify(auction_winner=False, price=additional_amount, clicked=None)  # Change clicked status to None for additional bidder
+                        if len(self.balances[bidder]) > 0:
+                            self.balances[bidder].append(self.balances[bidder][-1] - additional_amount)
+                        else:
+                            self.balances[bidder].append(-additional_amount)
+                    else:
+                        bidder.notify(auction_winner=True, price=additional_amount, clicked=None)
+                        additional_bidder.notify(auction_winner=False, price=bid_amount, clicked=None)  # Change clicked status to None for additional bidder
+                        extra_bidder_balance = self.balances[additional_bidder]
+                        if len(extra_bidder_balance) > 0:
+                            extra_bidder_balance.append(self.balances[additional_bidder][-1] - bid_amount)
+                        else:
+                            extra_bidder_balance.append(-bid_amount)
+                else:
+                    bidder.notify(auction_winner=True, price=0, clicked=True)
                     if len(self.balances[bidder]) > 0:
-                        self.balances[bidder].append(self.balances[bidder][-1] - additional_amount)
+                        self.balances[bidder].append(self.balances[bidder][-1])
                     else:
-                        self.balances[bidder].append(-additional_amount)
-                else:
-                    bidder.notify(auction_winner=True, price=bid_amount, clicked=None)  # Notify bidder with their own bid amount
-                    additional_bidder.notify(auction_winner=False, price=additional_amount, clicked=None)  # Change clicked status to None for additional bidder
-                    extra_bidder_balance = self.balances[additional_bidder]
-                    if len(extra_bidder_balance) > 0:
-                        extra_bidder_balance.append(self.balances[additional_bidder][-1] - additional_amount)
-                    else:
-                        extra_bidder_balance.append(-additional_amount)
+                        self.balances[bidder].append(0)
             else:
-                bidder.notify(auction_winner=True, price=0, clicked=True)
-                if len(self.balances[bidder]) > 0:
-                    self.balances[bidder].append(self.balances[bidder][-1])
-                else:
-                    self.balances[bidder].append(0)
-        else:
-            bidder.notify(auction_winner=False, price=0, clicked=None)
-            self.balances.setdefault(bidder, []).append(0)
-
+                bidder.notify(auction_winner=False, price=0, clicked=None)
+                self.balances.setdefault(bidder, []).append(0)
 
     def plot_history(self):
         """
