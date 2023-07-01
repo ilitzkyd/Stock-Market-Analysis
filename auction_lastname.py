@@ -3,7 +3,7 @@ This program is designed to simulate a second-price auction with random probabil
 """
 import random
 #import matplotlib.pyplot as plt
-from bidder_lastname import Bidder
+#from bidder_lastname import Bidder
 
 class User:
     """
