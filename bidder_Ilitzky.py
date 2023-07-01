@@ -12,7 +12,7 @@ class Bidder:
         """
         self.num_users = num_users
         self.num_rounds = num_rounds
-        self.balances = {}
+        self.balances = {user: [0] for user in range(num_users)}
 
     def bid(self, user_id):
         """
