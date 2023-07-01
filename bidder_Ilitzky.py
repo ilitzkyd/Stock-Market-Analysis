@@ -35,3 +35,7 @@ class Bidder:
                 self.balances[user_id].append(self.balances[user_id][-1] - price)
             else:
                 self.balances[user_id].append(-price)
+        else:
+        # Set auction_winner to False for b1 and b2
+            self.balances = {user: [0] for user in range(self.num_users)}
+
