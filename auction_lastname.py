@@ -8,19 +8,32 @@ class User:
     """
 
     def __init__(self):
+        """
+        User probability of a value between 0 and 1 
+        """
         self.__probability = random.uniform(0, 1)
 
     def show_ad(self):
+        """
+        Indicates if a user has clicked on an ad and returns a boolean 
+        """
         return random.random() < self.__probability
 
 
 class Auction:
+    """
+    Users the are participating in the auction and bidder objects in the auction 
+    """
+
     def __init__(self, users, bidders):
         self.users = users
         self.bidders = bidders
         self.balances = {bidder: [] for bidder in bidders}
 
     def execute_round(self):
+        """
+        Round to determine the outcome once a bidder places a bid
+        """
         for bidder in self.bidders:
             user_id = 0  # Only one user, so the ID is always 0
             bid_amount = bidder.bid(user_id)
@@ -60,6 +73,9 @@ class Auction:
                 self.balances.setdefault(bidder, []).append(0)
 
     def plot_history(self):
+        """
+        Displays the plot of the bid balances for each bidder 
+        """
         for bidder in self.bidders:
             balances = self.balances[bidder]
             plt.plot(range(len(balances)), balances, label=f'Bidder {self.bidders.index(bidder) + 1}')
@@ -69,9 +85,14 @@ class Auction:
         plt.legend()
         plt.show()
 
+#Creates three different bidders
 b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
 auction = Auction([User()], [b0, b1, b2])
+
+#Executes the round calling the auction function 
 auction.execute_round()
 auction.plot_history()
+
+#Gets the auction balances
 balances = auction.balances
 
