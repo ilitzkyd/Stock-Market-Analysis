@@ -28,7 +28,10 @@ class Bidder:
         Lets the user know of their outcome
         """
         if auction_winner and clicked is not None:
-            if self.balances:
-                user_id = next(iter(self.balances))
-                if len(self.balances[user_id]) > 0:
-                    self.balances[user_id][-1] -= price
+            if not self.balances:
+                self.balances = {user: [0] for user in range(self.num_users)}
+            user_id = next(iter(self.balances))
+            if len(self.balances[user_id]) > 0:
+                self.balances[user_id].append(self.balances[user_id][-1] - price)
+            else:
+                self.balances[user_id].append(-price)
