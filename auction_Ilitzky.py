@@ -9,7 +9,7 @@ try:
 except ImportError:
     MATPLOTLIB_IMPORTED = False
 
-#from bidder_Ilitzky import Bidder
+from bidder_Ilitzky import Bidder
 
 class User:
     """
@@ -44,7 +44,8 @@ class Auction:
         """
         self.users = users
         self.bidders = bidders
-        self.balances = {bidder: [0] for bidder in bidders}
+        self.balances = {bidder: [0] * len(users) for bidder in bidders}
+
 
     def execute_round(self):
         """
@@ -101,7 +102,6 @@ class Auction:
         plt.legend()
         plt.show()
 
-"""
 
 b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
 auction = Auction([User()], [b0, b1, b2])
@@ -117,4 +117,3 @@ bal = auction.balances
 user = User()
 probability = user.get_probability()
 print(probability)
-"""
