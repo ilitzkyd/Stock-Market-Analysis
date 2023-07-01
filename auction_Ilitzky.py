@@ -45,7 +45,8 @@ class Auction:
         self.users = users
         self.bidders = bidders
         self.balances = {bidder: [0] * len(users) for bidder in self.bidders}
-
+        for bidder in self.bidders:
+            self.balances[bidder][0] = 0  # Initialize the first balance to 0
 
     def execute_round(self):
         """
