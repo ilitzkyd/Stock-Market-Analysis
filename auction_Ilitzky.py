@@ -44,7 +44,7 @@ class Auction:
         """
         self.users = users
         self.bidders = bidders
-        self.balances = {bidder: [] for bidder in bidders}
+        self.balances = {bidder: [0] for bidder in bidders}
 
     def execute_round(self):
         """
@@ -102,6 +102,7 @@ class Auction:
         plt.show()
 
 """
+
 b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
 auction = Auction([User()], [b0, b1, b2])
 
@@ -117,8 +118,3 @@ user = User()
 probability = user.get_probability()
 print(probability)
 """
-
-
-
-
-
