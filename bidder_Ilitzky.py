@@ -12,7 +12,7 @@ class Bidder:
         """
         self.num_users = num_users
         self.num_rounds = num_rounds
-        self.balances = {user: [0] for user in range(num_users)}
+        self.balances = {}
 
     def bid(self, user_id):
         """
@@ -28,10 +28,7 @@ class Bidder:
         Lets the user know of their outcome
         """
         if auction_winner and clicked is not None:
-            if not self.balances:
-                self.balances = {user: [0] for user in range(self.num_users)}
-            user_id = next(iter(self.balances))
-            if len(self.balances[user_id]) > 0:
-                self.balances[user_id].append(self.balances[user_id][-1] - price)
-            else:
-                self.balances[user_id].append(-price)
+            if self.balances:
+                user_id = next(iter(self.balances))
+                if len(self.balances[user_id]) > 0:
+                    self.balances[user_id][-1] -= price
