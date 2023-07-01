@@ -1,12 +1,14 @@
+"""
+This program is designed to simulate a second-price auction with random probabilites for a set of users
+"""
 import random
 #import matplotlib.pyplot as plt
-from bidder_lastname import Bidder
+#from bidder_lastname import Bidder
 
 class User:
     """
     Class for user to have a secret probability as a boolean to indicate if a user clicks on an ad
     """
-
     def __init__(self):
         """
         User probability of a value between 0 and 1 
@@ -18,6 +20,11 @@ class User:
         Indicates if a user has clicked on an ad and returns a boolean 
         """
         return random.random() < self.__probability
+    def get_probability(self):
+        """
+        Returns the probability value of the user
+        """
+        return self.__probability
 
 
 class Auction:
@@ -26,6 +33,9 @@ class Auction:
     """
 
     def __init__(self, users, bidders):
+        """
+        Initializes the Auction class for the users and bidders
+        """
         self.users = users
         self.bidders = bidders
         self.balances = {bidder: [] for bidder in bidders}
@@ -41,7 +51,7 @@ class Auction:
             not_current_bidder = [bid for bid in self.bidders if bid != bidder]
             other_bidder = random.choice(not_current_bidder) if not_current_bidder else None
 
-            if adv:
+            if adv and other_bidder:
                 additional_bidder = other_bidder
 
                 if additional_bidder:
@@ -57,10 +67,11 @@ class Auction:
                     else:
                         bidder.notify(auction_winner=False, price=additional_amount, clicked=None)
                         additional_bidder.notify(auction_winner=True, price=bid_amount, clicked=True)
-                        if len(self.balances[additional_bidder]) > 0:
-                            self.balances[additional_bidder].append(self.balances[additional_bidder][-1] - bid_amount)
+                        extra_bidder_balance = self.balances[additional_bidder]
+                        if len(extra_bidder_balance ) > 0:
+                            extra_bidder_balance.append(self.balances[additional_bidder][-1] - bid_amount)
                         else:
-                            self.balances[additional_bidder].append(-bid_amount)
+                            extra_bidder_balance.append(-bid_amount)
 
                 else:
                     bidder.notify(auction_winner=True, price=0, clicked=True)
@@ -89,10 +100,14 @@ class Auction:
 b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
 auction = Auction([User()], [b0, b1, b2])
 
-#Executes the round calling the auction function 
+#Executes the round calling the auction function
 auction.execute_round()
 auction.plot_history()
 
 #Gets the auction balances
 balances = auction.balances
 
+#Prints the probability of the user
+user = User()
+probability = user.get_probability()
+print(probability)
