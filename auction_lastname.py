@@ -3,7 +3,12 @@ This program is designed to simulate a
 second-price auction with random probabilites for a set of users
 """
 import random
-import matplotlib.pyplot as plt
+try:
+    import matplotlib.pyplot as plt
+    MATPLOTLIB_IMPORTED = True
+except ImportError:
+    MATPLOTLIB_IMPORTED = False
+
 from bidder_lastname import Bidder
 
 class User:
