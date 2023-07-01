@@ -64,15 +64,15 @@ class Auction:
                     additional_amount = additional_bidder.bid(user_id)
 
                     if additional_amount < bid_amount:
-                        bidder.notify(auction_winner=True,price=additional_amount,clicked=True)
-                        additional_bidder.notify(auction_winner=False,price=additional_amount,clicked=None)
+                        bidder.notify(auction_winner=False,price=additional_amount,clicked=True)
+                        additional_bidder.notify(auction_winner=True,price=additional_amount,clicked=None)
                         if len(self.balances[bidder]) > 0:
                             self.balances[bidder].append(self.balances[bidder][-1] - additional_amount)
                         else:
                             self.balances[bidder].append(-additional_amount)
                     else:
-                        bidder.notify(auction_winner=False, price=additional_amount, clicked=None)
-                        additional_bidder.notify(auction_winner=True, price=bid_amount, clicked=True)
+                        bidder.notify(auction_winner=True, price=additional_amount, clicked=None)
+                        additional_bidder.notify(auction_winner=False, price=bid_amount, clicked=True)
                         extra_bidder_balance = self.balances[additional_bidder]
                         if len(extra_bidder_balance ) > 0:
                             extra_bidder_balance.append(self.balances[additional_bidder][-1] - bid_amount)
