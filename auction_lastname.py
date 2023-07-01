@@ -1,8 +1,9 @@
 """
-This program is designed to simulate a second-price auction with random probabilites for a set of users
+This program is designed to simulate a 
+second-price auction with random probabilites for a set of users
 """
 import random
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from bidder_lastname import Bidder
 
 class User:
@@ -58,8 +59,8 @@ class Auction:
                     additional_amount = additional_bidder.bid(user_id)
 
                     if additional_amount < bid_amount:
-                        bidder.notify(auction_winner=True, price=additional_amount, clicked=True)
-                        additional_bidder.notify(auction_winner=False, price=additional_amount, clicked=None)
+                        bidder.notify(auction_winner=True,price=additional_amount,clicked=True)
+                        additional_bidder.notify(auction_winner=False,price=additional_amount,clicked=None)
                         if len(self.balances[bidder]) > 0:
                             self.balances[bidder].append(self.balances[bidder][-1] - additional_amount)
                         else:
@@ -89,12 +90,12 @@ class Auction:
         """
         for bidder in self.bidders:
             balances = self.balances[bidder]
-            #plt.plot(range(len(balances)), balances, label=f'Bidder {self.bidders.index(bidder) + 1}')
+            plt.plot(range(len(balances)), balances, label=f'Bidder {self.bidders.index(bidder) + 1}')
 
-        #plt.xlabel('Round')
-        #plt.ylabel('Balance')
-        #plt.legend()
-        #plt.show()
+        plt.xlabel('Round')
+        plt.ylabel('Balance')
+        plt.legend()
+        plt.show()
 
 #Creates three different bidders
 b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
@@ -105,9 +106,11 @@ auction.execute_round()
 auction.plot_history()
 
 #Gets the auction balances
-balances = auction.balances
+#balances = auction.balances
 
 #Prints the probability of the user
 user = User()
 probability = user.get_probability()
 print(probability)
+
+
