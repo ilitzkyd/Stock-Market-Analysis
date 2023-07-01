@@ -3,7 +3,7 @@ This program is designed to simulate a second-price auction with random probabil
 """
 import random
 #import matplotlib.pyplot as plt
-#from bidder_lastname import Bidder
+from bidder_lastname import Bidder
 
 class User:
     """
@@ -97,15 +97,15 @@ class Auction:
         #plt.show()
 
 #Creates three different bidders
-#b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
-#auction = Auction([User()], [b0, b1, b2])
+b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
+auction = Auction([User()], [b0, b1, b2])
 
 #Executes the round calling the auction function
-#auction.execute_round()
-#auction.plot_history()
+auction.execute_round()
+auction.plot_history()
 
 #Gets the auction balances
-#balances = auction.balances
+balances = auction.balances
 
 #Prints the probability of the user
 user = User()
