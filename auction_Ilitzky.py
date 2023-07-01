@@ -64,8 +64,8 @@ class Auction:
                     additional_amount = additional_bidder.bid(user_id)
 
                     if additional_amount < bid_amount:
-                        bidder.notify(auction_winner=False,price=additional_amount,clicked=True)
-                        additional_bidder.notify(auction_winner=True,price=additional_amount,clicked=None)
+                        bidder.notify(auction_winner=True,price=additional_amount,clicked=None)
+                        additional_bidder.notify(auction_winner=False,price=additional_amount,clicked=True)
                         if len(self.balances[bidder]) > 0:
                             self.balances[bidder].append(self.balances[bidder][-1] - additional_amount)
                         else:
@@ -118,6 +118,8 @@ user = User()
 probability = user.get_probability()
 print(probability)
 """
+
+
 
 
 
