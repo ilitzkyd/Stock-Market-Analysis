@@ -1,5 +1,5 @@
 import random
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 from bidder_lastname import Bidder
 
 class User:
@@ -78,12 +78,12 @@ class Auction:
         """
         for bidder in self.bidders:
             balances = self.balances[bidder]
-            plt.plot(range(len(balances)), balances, label=f'Bidder {self.bidders.index(bidder) + 1}')
+            #plt.plot(range(len(balances)), balances, label=f'Bidder {self.bidders.index(bidder) + 1}')
 
-        plt.xlabel('Round')
-        plt.ylabel('Balance')
-        plt.legend()
-        plt.show()
+        #plt.xlabel('Round')
+        #plt.ylabel('Balance')
+        #plt.legend()
+        #plt.show()
 
 #Creates three different bidders
 b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
