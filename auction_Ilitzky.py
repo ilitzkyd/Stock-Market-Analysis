@@ -64,21 +64,20 @@ class Auction:
                     additional_amount = additional_bidder.bid(user_id)
 
                     if additional_amount < bid_amount:
-                        bidder.notify(auction_winner=True,price=additional_amount,clicked=None)
-                        additional_bidder.notify(auction_winner=False,price=additional_amount,clicked=True)
+                        bidder.notify(auction_winner=True, price=additional_amount, clicked=None)
+                        additional_bidder.notify(auction_winner=False, price=additional_amount, clicked=None)  # Change clicked status to None for additional bidder
                         if len(self.balances[bidder]) > 0:
                             self.balances[bidder].append(self.balances[bidder][-1] - additional_amount)
                         else:
                             self.balances[bidder].append(-additional_amount)
                     else:
                         bidder.notify(auction_winner=True, price=additional_amount, clicked=None)
-                        additional_bidder.notify(auction_winner=False, price=bid_amount, clicked=True)
+                        additional_bidder.notify(auction_winner=False, price=bid_amount, clicked=None)  # Change clicked status to None for additional bidder
                         extra_bidder_balance = self.balances[additional_bidder]
-                        if len(extra_bidder_balance ) > 0:
+                        if len(extra_bidder_balance) > 0:
                             extra_bidder_balance.append(self.balances[additional_bidder][-1] - bid_amount)
                         else:
                             extra_bidder_balance.append(-bid_amount)
-
                 else:
                     bidder.notify(auction_winner=True, price=0, clicked=True)
                     if len(self.balances[bidder]) > 0:
@@ -111,7 +110,7 @@ auction.execute_round()
 auction.plot_history()
 
 #Gets the auction balances
-balances = auction.balances
+bal = auction.balances
 
 #Prints the probability of the user
 user = User()
