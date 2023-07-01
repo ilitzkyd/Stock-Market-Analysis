@@ -9,7 +9,7 @@ try:
 except ImportError:
     MATPLOTLIB_IMPORTED = False
 
-from bidder_Ilitzky import Bidder
+#from bidder_Ilitzky import Bidder
 
 class User:
     """
@@ -102,7 +102,7 @@ class Auction:
         plt.legend()
         plt.show()
 
-
+'''
 b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
 auction = Auction([User()], [b0, b1, b2])
 
@@ -117,3 +117,4 @@ bal = auction.balances
 user = User()
 probability = user.get_probability()
 print(probability)
+'''
