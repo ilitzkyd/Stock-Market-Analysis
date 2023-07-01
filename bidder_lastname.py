@@ -1,3 +1,6 @@
+"""
+This program is made to represent the set of bidders that will be participating in the second price auction 
+"""
 import random
 class Bidder:
     """
