@@ -34,17 +34,10 @@ class Auction:
         user = random.choice(self.users)
         user_id = self.users.index(user)
 
-        bids = [bidder.bid(user_id) for bidder in self.bidders]
-        max_bid = max(bids)
-        max_bid_indices = [i for i, bid in enumerate(bids) if bid == max_bid]
-
-        if len(max_bid_indices) > 1:
-            winning_bidder_index = random.choice(max_bid_indices)
-        else:
-            winning_bidder_index = max_bid_indices[0]
-
-        winning_bidder = self.bidders[winning_bidder_index]
-        winning_price = max_bid if max_bid_indices else 0
+        bids = [(bidder, bidder.bid(user_id)) for bidder in self.bidders]
+        bids.sort(key=lambda x: x[1], reverse=True)
+        winning_bidder = bids[0][0]
+        winning_price = bids[1][1] if len(bids) > 1 else 0
 
         user_clicked = user.show_ad()
 
