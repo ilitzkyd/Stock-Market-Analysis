@@ -28,7 +28,7 @@ class Auction:
 
         # Initialize balances for each bidder to zero
         for bidder in self.bidders:
-            self.balances[bidder] = [0]
+            self.balances[bidder] = [0]*len(bidders)
 
     def execute_round(self):
         user = random.choice(self.users)
