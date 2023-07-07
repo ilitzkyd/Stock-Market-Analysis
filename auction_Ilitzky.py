@@ -1,6 +1,6 @@
 """
 This program is designed to simulate a 
-second-price auction with random probabilites for a set of users
+second-price auction with random probabilities for a set of users
 """
 import random
 try:
@@ -8,103 +8,69 @@ try:
     MATPLOTLIB_IMPORTED = True
 except ImportError:
     MATPLOTLIB_IMPORTED = False
-
 #from bidder_Ilitzky import Bidder
-
 class User:
-    """
-    Class for user to have a secret probability as a boolean to indicate if a user clicks on an ad
-    """
     def __init__(self):
-        """
-        User probability of a value between 0 and 1 
-        """
         self.__probability = random.uniform(0, 1)
 
     def show_ad(self):
-        """
-        Indicates if a user has clicked on an ad and returns a boolean 
-        """
         return random.random() < self.__probability
+
     def get_probability(self):
-        """
-        Returns the probability value of the user
-        """
         return self.__probability
 
 
 class Auction:
-    """
-    Users the are participating in the auction and bidder objects in the auction 
-    """
-
     def __init__(self, users, bidders):
-        """
-        Initializes the Auction class for the users and bidders
-        """
         self.users = users
         self.bidders = bidders
-        self.balances = {bidder: [0] * len(users) for bidder in self.bidders}
-        for bidder in self.bidders:
-            self.balances[bidder][0] = 0  # Initialize the first balance to 0
+        self.balances = {bidder: [0] for bidder in self.bidders}
 
     def execute_round(self):
-        """
-        Round to determine the outcome once a bidder places a bid
-        """
-        for bidder in self.bidders:
-            user_id = 0  # Only one user, so the ID is always 0
-            bid_amount = bidder.bid(user_id)
-            adv = self.users[user_id].show_ad()
-            not_current_bidder = [bid for bid in self.bidders if bid != bidder]
-            other_bids = [bid.bid(user_id) for bid in not_current_bidder]
+        user = random.choice(self.users)
+        user_id = self.users.index(user)
 
-            if adv and other_bids:
-                second_highest_bid = max(other_bids)
-                if second_highest_bid >= bid_amount:
-                    bidder.notify(auction_winner=False, price=bid_amount, clicked=None)
-                    self.bidders[other_bids.index(second_highest_bid)].notify(auction_winner=True, price=second_highest_bid, clicked=None)
-                    if len(self.balances[bidder]) > 0:
-                        self.balances[bidder].append(self.balances[bidder][-1] - bid_amount)
-                    else:
-                        self.balances[bidder].append(-bid_amount)
-                else:
-                    bidder.notify(auction_winner=True, price=0, clicked=True)
-                    if len(self.balances[bidder]) > 0:
-                        self.balances[bidder].append(self.balances[bidder][-1])
-                    else:
-                        self.balances[bidder].append(0)
+        bids = [bidder.bid(user_id) for bidder in self.bidders]
+        max_bid = max(bids)
+        max_bid_indices = [i for i, bid in enumerate(bids) if bid == max_bid]
+
+        if len(max_bid_indices) > 1:
+            winning_bidder_index = random.choice(max_bid_indices)
+        else:
+            winning_bidder_index = max_bid_indices[0]
+
+        winning_bidder = self.bidders[winning_bidder_index]
+        winning_price = max_bid if max_bid_indices else 0
+
+        user_clicked = user.show_ad()
+
+        for bidder in self.bidders:
+            if bidder == winning_bidder:
+                bidder.notify(auction_winner=True, price=winning_price, clicked=user_clicked)
+                self.balances[bidder].append(self.balances[bidder][-1] - winning_price)
             else:
-                bidder.notify(auction_winner=True, price=0, clicked=None)
-                self.balances.setdefault(bidder, []).append(0)
-    
+                bidder.notify(auction_winner=False, price=winning_price, clicked=None)
+                self.balances[bidder].append(self.balances[bidder][-1])
 
-    def plot_history(self):
-        """
-        Displays the plot of the bid balances for each bidder 
-        """
-        for bidder in self.bidders:
-            balances = self.balances[bidder]
-            plt.plot(range(len(balances)), balances, label=f'Bidder {self.bidders.index(bidder) + 1}')
+    def run_auction(self, num_rounds):
+        for _ in range(num_rounds):
+            self.execute_round()
 
-        plt.xlabel('Round')
-        plt.ylabel('Balance')
+    def get_balances(self):
+        return self.balances
+
+    def plot_balances(self):
+        for bidder, balance in self.balances.items():
+            plt.plot(range(len(balance)), balance, label=f"Bidder {bidder}")
+
+        plt.xlabel("Round")
+        plt.ylabel("Balance")
         plt.legend()
         plt.show()
 
 '''
 b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
 auction = Auction([User()], [b0, b1, b2])
-
-#Executes the round calling the auction function
-auction.execute_round()
-auction.plot_history()
-
-#Gets the auction balances
-bal = auction.balances
-
-#Prints the probability of the user
-user = User()
-probability = user.get_probability()
-print(probability)
+auction.run_auction(10)  # Run the auction for 10 rounds
+auction.plot_balances()  # Plot the balances of the bidders
 '''
