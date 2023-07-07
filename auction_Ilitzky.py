@@ -34,7 +34,7 @@ class Auction:
         user = random.choice(self.users)
         user_id = self.users.index(user)
 
-        bids = [(bidder, round(bidder.bid(user_id), 3)) for bidder in self.bidders]
+        bids = [(bidder, bidder.bid(user_id)) for bidder in self.bidders]
         bids.sort(key=lambda x: x[1], reverse=True)
         winning_bidder = bids[0][0]
         winning_price = bids[1][1] if len(bids) > 1 else 0
