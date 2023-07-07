@@ -26,6 +26,10 @@ class Auction:
         self.bidders = bidders
         self.balances = {bidder: [0] for bidder in self.bidders}
 
+        # Initialize balances for each bidder to zero
+        for bidder in self.bidders:
+            self.balances[bidder] = [0]
+
     def execute_round(self):
         user = random.choice(self.users)
         user_id = self.users.index(user)
