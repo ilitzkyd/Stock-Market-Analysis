@@ -3,21 +3,22 @@ This program is designed to simulate a
 second-price auction with random probabilities for a set of users
 """
 import random
-#import numpy as np 
+import numpy as np 
 try:
     import matplotlib.pyplot as plt
     MATPLOTLIB_IMPORTED = True
 except ImportError:
     MATPLOTLIB_IMPORTED = False
 
-#from bidder_Ilitzky import Bidder
+from bidder_Ilitzky import Bidder
 
 class User:
     def __init__(self):
         self.__probability = random.uniform(0, 1)
 
     def show_ad(self):
-        return random.random() < self.__probability
+        #return random.random() < self.__probability
+        return np.random.choice([True,False],p=[self.__probability,1-self.__probability])
 
     def get_probability(self):
         return self.__probability
@@ -25,7 +26,7 @@ class User:
 
 class Auction:
     def __init__(self, users, bidders):
-        self.users = users
+        self._users = users
         self.bidders = bidders
         self.balances = [0]*len(bidders)
         #self.balances = {bidder: [0] for bidder in self.bidders}
@@ -38,7 +39,8 @@ class Auction:
     def execute_round(self):
         #user = random.choice(self.users) #Random user
         #user_id = self.users.index(user) #Index of the user 
-        user_id = random.randint(len(self.users))
+        user_id = np.random.randint(len(self._users))
+        print(user_id)
         bid_price = [bidder.bid(user_id) for bidder in self.bidders]
         potential_winner = []
         highest_bid = 0
@@ -63,7 +65,7 @@ class Auction:
         #print(bids)
         #print(winning_bidder.bid(user_id))
         #np.random.choice(winning_bidder)
-        user_clicked = self.users[user_id].show_ad() #Ad click determination 
+        user_clicked = self._users[user_id].show_ad() #Ad click determination 
         for bidder_id in range(len(self.bidders)): 
             if bidder_id == winner: 
                 self.bidders[bidder_id].notify(auction_winner=True, price=second_highest, clicked=user_clicked)
@@ -102,9 +104,8 @@ class Auction:
         plt.show()
 
 
-'''
+
 b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
 auction = Auction([User()], [b0, b1, b2])
 auction.run_auction(10)  # Run the auction for 10 rounds
 auction.plot_balances()  # Plot the balances of the bidders
-'''
