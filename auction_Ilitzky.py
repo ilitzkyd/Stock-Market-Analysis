@@ -10,7 +10,7 @@ try:
 except ImportError:
     MATPLOTLIB_IMPORTED = False
 
-from bidder_Ilitzky import Bidder
+#from bidder_Ilitzky import Bidder
 
 class User:
     def __init__(self):
@@ -104,8 +104,9 @@ class Auction:
         plt.show()
 
 
-
+'''
 b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
 auction = Auction([User()], [b0, b1, b2])
 auction.run_auction(10)  # Run the auction for 10 rounds
 auction.plot_balances()  # Plot the balances of the bidders
+'''
