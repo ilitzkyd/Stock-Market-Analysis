@@ -6,7 +6,7 @@ class Bidder:
         self.balances = {}
 
     def bid(self, user_id):
-        return round(random.uniform(0, 1000), 3)
+        return random.uniform(0, 1)
 
     def notify(self, auction_winner, price, clicked):
         if auction_winner and clicked is not None:
