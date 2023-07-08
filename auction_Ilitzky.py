@@ -26,8 +26,8 @@ class Auction:
     def __init__(self, users, bidders):
         self.users = users
         self.bidders = bidders
-        self.balances = [0]*len(bidders)
-        #self.balances = {bidder: [0] for bidder in self.bidders}
+        #self.balances = [0]*len(bidders)
+        self.balances = {bidder: [0] for bidder in self.bidders}
 
         # Initialize balances for each bidder to zero
         #for bidder in self.bidders:
