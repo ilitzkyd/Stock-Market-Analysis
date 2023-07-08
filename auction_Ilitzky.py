@@ -40,7 +40,6 @@ class Auction:
         #user = random.choice(self.users) #Random user
         #user_id = self.users.index(user) #Index of the user 
         user_id = np.random.randint(len(self._users))
-        print(user_id)
         bid_price = [bidder.bid(user_id) for bidder in self.bidders]
         potential_winner = []
         highest_bid = 0
