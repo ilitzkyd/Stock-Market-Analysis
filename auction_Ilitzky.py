@@ -36,8 +36,9 @@ class Auction:
         #self.balances[bidder] = [0]*len(users)
 
     def execute_round(self):
-        user = random.choice(self.users) #Random user
-        user_id = self.users.index(user) #Index of the user 
+        #user = random.choice(self.users) #Random user
+        #user_id = self.users.index(user) #Index of the user 
+        user_id = random.randint(len(self.users))
         bid_price = [bidder.bid(user_id) for bidder in self.bidders]
         potential_winner = []
         highest_bid = 0
@@ -62,7 +63,7 @@ class Auction:
         #print(bids)
         #print(winning_bidder.bid(user_id))
         #np.random.choice(winning_bidder)
-        user_clicked = user.show_ad() #Ad click determination 
+        user_clicked = self.users[user_id].show_ad() #Ad click determination 
         for bidder_id in range(len(self.bidders)): 
             if bidder_id == winner: 
                 self.bidders[bidder_id].notify(auction_winner=True, price=second_highest, clicked=user_clicked)
