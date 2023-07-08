@@ -65,14 +65,17 @@ class Auction:
         #print(winning_bidder.bid(user_id))
         #np.random.choice(winning_bidder)
         user_clicked = self._users[user_id].show_ad() #Ad click determination 
+        self.balances[winner]-=second_highest
+        if user_clicked: 
+            self.balances[winner]+=1
         for bidder_id in range(len(self.bidders)): 
             if bidder_id == winner: 
                 self.bidders[bidder_id].notify(auction_winner=True, price=second_highest, clicked=user_clicked)
                 #self.balances[bidder_id].append(self.balances[bidder_id][-1] - second_highest) #Updates the balance by removing the winning price 
-                if user_clicked == True: 
-                    self.balances[bidder_id] = 1- second_highest 
-                else: 
-                    self.balances[bidder_id]= -second_highest
+                #if user_clicked == True: 
+                #    self.balances[bidder_id] = 1- second_highest 
+                #else: 
+                #    self.balances[bidder_id]= -second_highest
             else: 
                 self.bidders[bidder_id].notify(auction_winner=False, price=second_highest, clicked=None)
                 #self.balance[bidder_id] = 1-second_highest 
