@@ -13,4 +13,4 @@ class Bidder:
             if self.balances:
                 user_id = next(iter(self.balances))
                 if len(self.balances[user_id]) > 0:
-                    self.balances[user_id][-1] -= float(price)
+                    self.balances[user_id][-1] -= price
