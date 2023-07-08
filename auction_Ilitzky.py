@@ -28,8 +28,8 @@ class Auction:
     def __init__(self, users, bidders):
         self._users = users
         self.bidders = bidders
-        self.balances = [0]*len(bidders)
-        #self.balances = {bidder: [0] for bidder in self.bidders}
+        #self.balances = [0]*len(bidders)
+        self.balances = {bidder: 0 for bidder in (self.bidders)}
         #bidder_id
 
         # Initialize balances for each bidder to zero
@@ -65,9 +65,9 @@ class Auction:
         #print(winning_bidder.bid(user_id))
         #np.random.choice(winning_bidder)
         user_clicked = self._users[user_id].show_ad() #Ad click determination 
-        self.balances[winner]-=second_highest
+        self.balances[self.bidders[winner]]-=second_highest
         if user_clicked: 
-            self.balances[winner]+=1
+            self.balances[self.bidders[winner]]+=1
         for bidder_id in range(len(self.bidders)): 
             if bidder_id == winner: 
                 self.bidders[bidder_id].notify(auction_winner=True, price=second_highest, clicked=user_clicked)
@@ -110,5 +110,5 @@ class Auction:
 b0, b1, b2 = Bidder(1, 10), Bidder(1, 10), Bidder(1, 10)
 auction = Auction([User()], [b0, b1, b2])
 auction.run_auction(10)  # Run the auction for 10 rounds
-auction.plot_balances()  # Plot the balances of the bidders
+#auction.plot_balances()  # Plot the balances of the bidders
 '''
