@@ -82,6 +82,14 @@ class Auction:
                 self.bidders[bidder_id].notify(auction_winner=True, price=second_highest, clicked=user_clicked)
             else:
                 self.bidders[bidder_id].notify(auction_winner=False, price=second_highest, clicked=None)
+        
+        disqualified_bidders = []
+        for bidder, balance in self.balances.items():
+            if balance < -1000:
+                disqualified_bidders.append(bidder)
+
+        for disqualified_bidder in disqualified_bidders:
+            del self.balances[disqualified_bidder]
 
     def run_auction(self, num_rounds):
         '''
