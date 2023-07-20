@@ -1,49 +1,62 @@
-# Stock Analysis
+# Stock Correlation and Economic Indicators
 
-This repository contains Python code for analyzing stock data and performing stock forecasting using the Prophet library. It includes code for fetching historical stock data, plotting stock prices, and generating stock price forecasts.
+This Jupyter notebook contains two classes, `StockAnalysis` and `CorrelationVisualizer`, designed to help with the analysis of stock data and visualization of correlations between stock prices and economic indicators.
 
-## Table of Contents
+## Stock Analysis
 
-- [Introduction](#introduction)
-- [Features](#features)
-- [Installation](#installation)
-- [Usage](#usage)
-- [License](#license)
+The `StockAnalysis` class fetches historical stock data from Yahoo Finance, calculates Bollinger Bands, identifies bullish and bearish signals, and creates visualizations using Plotly.
 
-## Introduction
+### Requirements
 
-The main purpose of this repository is to provide a set of Python scripts that allow users to analyze stock data and perform stock forecasting using the Prophet library.
+- Python 3.x
+- pandas
+- yfinance
+- plotly
+- prophet
 
-## Features
+### Usage
 
-1. Fetch historical stock data from Yahoo Finance for a given ticker and date range.
-2. Plot historical stock prices for one or more tickers over a specified date range.
-3. Generate stock price forecasts for a given ticker using the Prophet library.
-4. Evaluate the accuracy of the stock price forecasts and display evaluation metrics.
+1. Open the `stock_correlation_economic_indicators.ipynb` notebook.
+2. Make sure you have the required libraries installed (you can install them using `!pip install pandas yfinance plotly prophet`).
+3. In the `StockAnalysis` class, initialize the object with your desired list of stock tickers and the date range for historical data.
+4. Run the cells to perform the analysis and visualize the results.
 
-## Installation
+## Correlation Visualizer
 
-To use the code in this repository, follow these steps:
+The `CorrelationVisualizer` class fetches economic indicator data from FRED API and stock price data from Yahoo Finance for the specified tickers. It then calculates the correlation matrix and visualizes it using Seaborn.
 
-1. Clone the repository to your local machine:
+### Requirements
 
-```bash
-git clone https://github.com/your-username/Stock-Analysis.git
+- Python 3.x
+- pandas
+- yfinance
+- seaborn
+- matplotlib
+- fredapi
 
+### Usage
 
+1. Open the `stock_correlation_economic_indicators.ipynb` notebook.
+2. Make sure you have the required libraries installed (you can install them using `!pip install pandas yfinance seaborn matplotlib fredapi`).
+3. In the `CorrelationVisualizer` class, initialize the object with your desired list of stock tickers, economic indicators, and the date range for data.
+4. Obtain your FRED API key from https://fred.stlouisfed.org/docs/api/api_key.html.
+5. Replace `'YOUR_FRED_API_KEY'` in the notebook with your actual API key.
+6. Run the cells to fetch data and visualize the correlation matrix for each ticker and the economic indicators.
 
-pip install pandas yfinance plotly prophet scipy seaborn matplotlib tabulate
+### Bearish and Bullish Signals
 
-Run the Python scripts to analyze stock data and perform stock forecasting.
+In the `StockAnalysis` class, Bollinger Bands are calculated based on a rolling average and standard deviation of the closing prices. When the closing price crosses above the upper Bollinger Band, it's considered a **bearish signal**, indicating a potential overbought condition. Conversely, when the closing price crosses below the lower Bollinger Band, it's considered a **bullish signal**, indicating a potential oversold condition.
 
-**## Usage**
-To fetch historical stock data, analyze stock prices, and perform stock forecasting, you can run the Python scripts available in the repository. The main scripts are:
+The `identify_bullish_bearish_signals` method in the `StockAnalysis` class identifies these bullish and bearish signals, and they are visualized as green and red markers on the plot.
 
-stock_data_analysis.py: This script allows you to fetch historical stock data, plot stock prices, and generate stock price forecasts using the Prophet library. You can customize the tickers and date range for analysis.
+## Examples
 
-stock_forecasting.py: This script provides classes for fetching historical stock data and performing stock forecasting using the Prophet library. You can use this script to integrate stock forecasting into your own applications.
+For examples and usage, please see the code in the `stock_correlation_economic_indicators.ipynb` notebook.
 
-To see the plot: file:///C:/Users/davidilitzky.REDMOND/figure.html
+## Note
 
-**## License**
-This project is licensed under the MIT License - see the LICENSE file for details.
+Please make sure you have the required libraries installed before running the code. If you encounter any issues, feel free to contribute to the project or create issues on GitHub.
+
+Make sure to replace `'YOUR_FRED_API_KEY'` in the notebook with your actual FRED API key to fetch economic indicator data.
+
+Happy analyzing and visualizing!
