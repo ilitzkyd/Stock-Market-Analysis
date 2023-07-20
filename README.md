@@ -31,18 +31,16 @@ To use the code in this repository, follow these steps:
 ```bash
 git clone https://github.com/your-username/Stock-Analysis.git
 
-
-
 pip install pandas yfinance plotly prophet scipy seaborn matplotlib tabulate
 
 Run the Python scripts to analyze stock data and perform stock forecasting.
 
-##Usage
+**## Usage**
 To fetch historical stock data, analyze stock prices, and perform stock forecasting, you can run the Python scripts available in the repository. The main scripts are:
 
 stock_data_analysis.py: This script allows you to fetch historical stock data, plot stock prices, and generate stock price forecasts using the Prophet library. You can customize the tickers and date range for analysis.
 
 stock_forecasting.py: This script provides classes for fetching historical stock data and performing stock forecasting using the Prophet library. You can use this script to integrate stock forecasting into your own applications.
 
-##License
+**## License**
 This project is licensed under the MIT License - see the LICENSE file for details.
