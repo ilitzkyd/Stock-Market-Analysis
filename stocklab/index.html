@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stock Research Lab</title>
+<script>
+(() => {
+  const param = new URLSearchParams(window.location.search).get("scoutTheme");
+  const theme =
+    param || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+  document.documentElement.setAttribute("data-theme", theme);
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #b11f4b;
+  --cp-accent-hover: #9a1a41;
+  --cp-accent-soft: rgba(177, 31, 75, 0.08);
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: #0078d4;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: rgba(177, 31, 75, 0.12);
+}
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #fd8ea1;
+  --cp-accent-hover: #fb7b91;
+  --cp-accent-soft: rgba(253, 142, 161, 0.14);
+  --cp-accent-fg: #1a1a1a;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: #4da6ff;
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: rgba(253, 142, 161, 0.12);
+}
+*{box-sizing:border-box}body{margin:0;background:var(--cp-bg);color:var(--cp-text);font:14px/1.5 "Segoe UI",Aptos,Calibri,-apple-system,BlinkMacSystemFont,sans-serif}button,input,select{font:inherit;color:var(--cp-text);background:var(--cp-surface);border:1px solid var(--cp-border);border-radius:10px;padding:9px 12px}button{font-weight:600;cursor:pointer}button:hover{background:var(--cp-surface-soft);border-color:var(--cp-border-strong)}button.primary{background:var(--cp-accent);border-color:var(--cp-accent);color:var(--cp-accent-fg)}button.primary:hover{background:var(--cp-accent-hover)}button:disabled{opacity:.45;cursor:wait}:focus-visible{outline:3px solid var(--cp-accent);outline-offset:3px}[hidden]{display:none!important}
+header{background:var(--cp-bg-elevated);border-bottom:1px solid var(--cp-border)}.top{max-width:1440px;margin:auto;padding:16px 28px;display:flex;gap:12px;align-items:center}.logo{width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:var(--cp-accent);color:var(--cp-accent-fg);font-size:20px;font-weight:750}.brand{font-weight:700;font-size:17px}.spacer{flex:1}.tag{font-size:10px;letter-spacing:.5px;border:1px solid var(--cp-border);border-radius:20px;padding:4px 10px;color:var(--cp-text-muted)}.muted,small{color:var(--cp-text-muted)}small{font-size:12px}
+main{max-width:1440px;margin:auto;padding:30px 28px}.eyebrow{text-transform:uppercase;letter-spacing:1.8px;font-size:10px;color:var(--cp-accent);font-weight:750}h1{font-size:34px;letter-spacing:-1.1px;margin:6px 0}h2{font-size:16px;margin:0}h3{font-size:13px;margin:0 0 12px}p{margin:6px 0}.hero{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:26px}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.layout{display:grid;grid-template-columns:238px minmax(0,1fr);gap:24px}.card{background:var(--cp-surface);border:1px solid var(--cp-border);border-radius:16px}.sidebar{padding:22px;height:fit-content}.field{margin-bottom:18px}.field label{font-size:11px;font-weight:650;display:block;margin-bottom:7px}.field input,.field select{width:100%}.sidebar .primary{width:100%}.divider{border-top:1px solid var(--cp-border);margin:22px 0}.method{font-size:12px;color:var(--cp-text-muted)}.method strong{color:var(--cp-text)}.method p{margin:12px 0}
+.tabs{display:flex;gap:5px;border-bottom:1px solid var(--cp-border);margin-bottom:20px;overflow:auto}.tabs button{border:0;border-radius:0;background:none;color:var(--cp-text-muted);padding:12px 16px;border-bottom:3px solid var(--cp-bg)}.tabs button[aria-selected=true]{color:var(--cp-accent);border-bottom-color:var(--cp-accent)}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}.metric{padding:18px}.metric .label{font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--cp-text-muted)}.metric .value{font-size:25px;font-weight:650;letter-spacing:-.7px;margin:8px 0 3px}.metric small{font-size:10px}.panel{padding:22px;margin-bottom:20px}.head{display:flex;justify-content:space-between;align-items:start;gap:12px}.head p{font-size:12px;color:var(--cp-text-muted)}.plot{position:relative}.plot svg{display:block;width:100%;height:auto;min-height:190px;margin-top:14px}.tip{position:absolute;pointer-events:none;background:var(--cp-panel-strong);border:1px solid var(--cp-border);border-radius:10px;padding:10px 12px;font-size:12px;white-space:pre-line;box-shadow:var(--cp-shadow);z-index:2}.legend{display:flex;gap:18px;font-size:11px;color:var(--cp-text-muted);flex-wrap:wrap;margin-top:14px}.legend i{display:inline-block;width:18px;height:3px;background:var(--cp-accent);margin-right:6px;vertical-align:middle}.legend i.secondary{background:var(--cp-text-muted)}.note{font-size:11px;color:var(--cp-text-muted);border-top:1px solid var(--cp-border);padding-top:12px;margin-top:12px}.split{display:grid;grid-template-columns:1.2fr 1fr;gap:20px}.scroll{overflow:auto;max-height:350px}table{width:100%;border-collapse:collapse;font-size:12px}th{font-size:10px;font-weight:500;text-align:left;color:var(--cp-text-muted);padding:12px 7px;border-bottom:1px solid var(--cp-border)}td{padding:12px 7px;border-bottom:1px solid var(--cp-border)}.num{text-align:right;font-variant-numeric:tabular-nums}tbody tr:last-child td{border-bottom:0}tr.selected{background:var(--cp-accent-soft)}.model-button{border:0;background:none;padding:0;text-align:left;font-size:12px}.badge{font-size:9px;color:var(--cp-accent);background:var(--cp-accent-soft);padding:2px 4px;border-radius:4px;margin-left:4px}.bars{display:grid;gap:13px;margin:22px 0}.bar-row{display:grid;grid-template-columns:120px 1fr 40px;gap:8px;align-items:center;font-size:10px}.track{height:7px;background:var(--cp-surface-soft);border-radius:4px;overflow:hidden}.fill{height:100%;background:var(--cp-accent)}.alert{padding:12px 16px;border:1px solid var(--cp-danger);color:var(--cp-danger);border-radius:10px;margin:16px 0;background:var(--cp-surface)}.disclaimer{font-size:11px;color:var(--cp-text-muted);margin:20px 0}.waiting{opacity:.45;pointer-events:none}.empty{padding:38px;text-align:center;color:var(--cp-text-muted)}
+@media(max-width:1050px){.split{grid-template-columns:1fr}.layout{grid-template-columns:215px minmax(0,1fr);gap:16px}.metric{padding:12px}.metric .value{font-size:21px}}
+@media(max-width:760px){main{padding:20px 14px}.top{padding:14px}.top #status{display:none}.hero{display:block}.hero .row{margin-top:14px}h1{font-size:28px}.layout{grid-template-columns:1fr}.sidebar{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:16px}.sidebar h3,.sidebar .method,.sidebar .divider{display:none}.field{margin:0}.sidebar .primary{align-self:end}.metrics{grid-template-columns:1fr 1fr}.panel{padding:16px}.head{flex-wrap:wrap}.tabs button{padding:10px}.bar-row{grid-template-columns:100px 1fr 35px}}
+</style>
+</head>
+<body>
+<header><div class="top"><div class="logo">s</div><span class="brand">Stock Research Lab</span><span class="tag">LOCAL RESEARCH</span><span class="spacer"></span><small id="status" role="status">Loading sample analysis...</small><button id="theme">Theme</button></div></header>
+<main>
+<div class="hero"><div><div class="eyebrow">Evidence over conviction</div><h1>Understand the market. Question the forecast.</h1><p class="muted" id="subtitle">Transparent models, exact dates, and explicit assumptions.</p></div><div class="row"><button id="export" disabled>Export forecast CSV</button><button id="png" disabled>Save chart PNG</button></div></div>
+<div id="error" class="alert" role="alert" hidden></div>
+<div class="layout">
+<aside class="card sidebar">
+<h3>Research setup</h3>
+<div class="field"><label for="ticker">US ticker</label><input id="ticker" value="MSFT" maxlength="11" spellcheck="false"></div>
+<div class="field"><label for="benchmark">Benchmark</label><input id="benchmark" value="SPY" maxlength="11" spellcheck="false"></div>
+<div class="field"><label for="source">Data source</label><select id="source"><option value="demo">Synthetic demo</option><option value="live">Live / Yahoo Finance</option></select></div>
+<div class="field"><label for="period">Historical window</label><select id="period"><option value="2y" selected>2 years</option><option value="5y">5 years</option><option value="10y">10 years</option></select></div>
+<div class="field"><label for="cost">Strategy costs (bps / side)</label><input id="cost" type="number" min="0" max="100" value="10"></div>
+<button class="primary" id="run">Run analysis</button>
+<div class="divider"></div><div class="method"><strong>Designed to be questioned.</strong><p>Five walk-forward folds select a model. A separate final period measures its unseen performance.</p><p>No outlier deletion, no future actuals in features, and no arbitrary buy/sell score.</p><p>US shares and ETFs only. Adjusted prices and completed trading sessions.</p></div>
+</aside>
+<section id="results" aria-busy="true">
+<nav class="tabs" role="tablist" aria-label="Research views">
+<button role="tab" id="tab-overview" aria-controls="overview" data-tab="overview" aria-selected="true">Overview</button>
+<button role="tab" id="tab-forecast" aria-controls="forecast" data-tab="forecast" aria-selected="false">Forecast</button>
+<button role="tab" id="tab-signals" aria-controls="signals" data-tab="signals" aria-selected="false">Signals</button>
+<button role="tab" id="tab-macro" aria-controls="macro" data-tab="macro" aria-selected="false">Macro</button>
+</nav>
+<div id="overview" role="tabpanel" aria-labelledby="tab-overview">
+<div class="metrics" id="overviewMetrics"></div>
+<div class="card panel"><div class="head"><div><h2>Performance in perspective</h2><p>Both series rebased to 100 on their first shared observation.</p></div><span class="tag" id="provenance">SAMPLE DATA</span></div><div class="legend" id="overviewLegend"></div><div class="plot"><svg id="overviewChart" viewBox="0 0 1000 330" role="img" tabindex="0" aria-label="Normalized asset and benchmark prices; use arrow keys to inspect"></svg><div class="tip" hidden></div></div><div class="note" id="sourceNote"></div></div>
+<div class="card panel"><h2>Correlation changes over time</h2><p class="muted">63-session rolling correlation of daily adjusted-price returns, not price levels.</p><div class="plot"><svg id="correlationChart" viewBox="0 0 1000 270" role="img" tabindex="0" aria-label="Rolling return correlation"></svg><div class="tip" hidden></div></div></div>
+</div>
+<div id="forecast" role="tabpanel" aria-labelledby="tab-forecast" hidden>
+<div class="card panel"><div class="head"><div><h2>A forecast that earns its place</h2><p id="forecastSummary"></p></div><select id="model" aria-label="Forecast model"><option value="auto">Auto (best validation)</option><option>Last price</option><option>Log drift</option><option>Random Forest</option></select></div>
+<div class="row" style="margin-top:16px"><label for="horizon">Sessions ahead</label><select id="horizon"><option value="5">5</option><option value="10">10</option><option value="20" selected>20</option></select><label for="band">Error band</label><select id="band"><option value="95">95% empirical</option><option value="80">80% empirical</option><option value="none">Hidden</option></select></div>
+<div class="legend"><span><i class="secondary"></i>Observed</span><span><i></i>Forecast</span></div><div class="plot"><svg id="forecastChart" viewBox="0 0 1000 330" role="img" tabindex="0" aria-label="Forecast with empirical error bands"></svg><div class="tip" hidden></div></div><div class="note" id="forecastNote"></div></div>
+<div class="split"><div class="card panel"><h2>Model scoreboard</h2><p class="muted">MAPE: mean absolute percentage error. Lower is better.</p><table><thead><tr><th>Model</th><th class="num">Validation</th><th class="num">Final test</th></tr></thead><tbody id="scoreRows"></tbody></table><div class="note" id="methodNote"></div></div><div class="card panel"><h2>Inside the Random Forest</h2><div class="bars" id="importance"></div><div class="note">Training impurity importance, not a causal explanation. Direct multi-horizon log-return targets; no invented future feature values.</div></div></div>
+<div class="card panel"><h2>Forecast by trading session</h2><div class="scroll"><table><thead><tr><th>Date</th><th class="num">Adjusted price</th><th class="num">Lower band</th><th class="num">Upper band</th></tr></thead><tbody id="forecastRows"></tbody></table></div></div>
+</div>
+<div id="signals" role="tabpanel" aria-labelledby="tab-signals" hidden>
+<div class="metrics" id="signalMetrics"></div><div class="card panel"><h2>A rule, not a recommendation</h2><p class="muted" id="rule"></p><div class="legend"><span><i></i>Illustrative strategy</span><span><i class="secondary"></i>Buy &amp; hold, same costs</span></div><div class="plot"><svg id="signalChart" viewBox="0 0 1000 330" role="img" tabindex="0" aria-label="Illustrative strategy equity and buy-and-hold benchmark"></svg><div class="tip" hidden></div></div><div class="note" id="signalNote"></div></div>
+<div class="card panel"><h2>Execution ledger</h2><p class="muted" id="tradeNote"></p><div class="scroll"><table><thead><tr><th>Execution date</th><th>Action</th><th class="num">Adjusted open</th><th>Reason</th></tr></thead><tbody id="tradeRows"></tbody></table></div></div>
+</div>
+<div id="macro" role="tabpanel" aria-labelledby="tab-macro" hidden>
+<div class="card panel"><div class="head"><div><h2>Macro context, without hindsight claims</h2><p>Monthly returns versus changes in economic indicators.</p></div><div class="row"><label for="vintage">FRED vintage</label><input id="vintage" type="date"><button id="loadMacro">Load macro data</button></div></div><div id="macroStatus" class="empty">Choose a vintage date, then load macro data. Live data requires your own FRED_API_KEY.</div><div class="scroll"><table id="macroTable" hidden><thead><tr><th>Indicator</th><th>Transformation</th><th class="num">Correlation</th><th class="num">Paired months</th><th>Status</th></tr></thead><tbody id="macroRows"></tbody></table></div><div class="note" id="macroNote">Macro observations are excluded from the forecasting models. Observation-month alignment alone does not establish when information became tradable.</div></div>
+</div>
+</section></div>
+<footer class="disclaimer">Research software, not investment advice. Historical tests and error bands do not guarantee future results. No trades are placed. Demo mode never represents real prices.</footer>
+</main>
+<script>
+"use strict";
+const $=id=>document.getElementById(id), names=["Last price","Log drift","Random Forest"];
+const fmt=(n,d=1)=>n===null||n===undefined?"n/a":new Intl.NumberFormat("en-US",{minimumFractionDigits:d,maximumFractionDigits:d}).format(n);
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pct=n=>`${fmt(n)}%`;
+let report=null,busy=false,currentTab="overview",activeConfig=null;
+const plots=new Map();
+function config(){return {ticker:$("ticker").value,benchmark:$("benchmark").value,mode:$("source").value,period:$("period").value,cost_bps:Number($("cost").value)};}
+function selected(){return $("model").value==="auto"?report.forecast.winner:$("model").value;}
+function error(text){$("error").textContent=text;$("error").hidden=false;}
+function waiting(value){
+ busy=value;$("status").textContent=value?"Working on your analysis...":"Local engine ready";
+ for(const element of document.querySelectorAll(".sidebar input,.sidebar select,.sidebar button,#loadMacro"))element.disabled=value;
+ $("export").disabled=value||!report;$("png").disabled=value||!report||currentTab==="macro";
+ $("results").classList.toggle("waiting",value);$("results").setAttribute("aria-busy",String(value));
+}
+async function post(path,payload){
+ const response=await fetch(path,{method:"POST",headers:{"Content-Type":"application/json","X-Stock-Lab":"1"},body:JSON.stringify(payload)});
+ const value=await response.json();if(!response.ok)throw new Error(value.error||`Request failed (${response.status})`);return value;
+}
+async function run(){
+ if(busy)return;waiting(true);$("error").hidden=true;
+ try{const settings=config(),next=await post("/api/analyze",settings);report=next;activeConfig=settings;render();$("macroTable").hidden=true;$("macroStatus").hidden=false;$("macroStatus").textContent="Load macro data for the current asset and source.";}
+ catch(e){error(`${e.message}${report?" Previous analysis remains displayed.":""}`);}
+ finally{waiting(false);}
+}
+function metric(label,value,note){return `<div class="card metric"><div class="label">${esc(label)}</div><div class="value">${esc(value)}</div><small>${esc(note)}</small></div>`;}
+function render(){
+ const o=report.overview,s=report.signals,f=report.forecast;
+ if(!$("vintage").value)$("vintage").value=report.macro_default_vintage;
+ $("vintage").max=report.macro_default_vintage;
+ $("subtitle").textContent=`${report.mode==="demo"?"SYNTHETIC DATA":"YAHOO FINANCE"} / ${report.ticker} vs ${report.benchmark} / ${report.observations} completed sessions / through ${report.as_of}`;
+ $("provenance").textContent=report.mode==="demo"?"SYNTHETIC DATA":"LIVE SOURCE";
+ $("sourceNote").textContent=`${report.source}. Fetched ${new Date(report.fetched_at).toLocaleString()}. Price adjustments are applied to both opens and closes.`;
+ $("overviewMetrics").innerHTML=metric("Last adjusted close",`$${fmt(o.last,2)}`,"USD / not a real-time quote")+metric("Window return",pct(o.return_pct),"Adjusted-price change")+metric("Annualized volatility",pct(o.annualized_volatility_pct),"Daily returns x sqrt(252)")+metric("Maximum drawdown",pct(o.max_drawdown_pct),"Peak-to-trough, this window");
+ $("overviewLegend").innerHTML=`<span><i></i>${esc(report.ticker)}</span><span><i class="secondary"></i>${esc(report.benchmark)}</span>`;
+ chart("overviewChart",o.comparison_dates,[{name:report.ticker,values:o.asset_normalized},{name:report.benchmark,values:o.benchmark_normalized,secondary:true}]);
+ chart("correlationChart",o.rolling_dates,[{name:"63-session correlation",values:o.rolling_correlation}],{range:[-1,1],height:270,digits:2});
+ $("signalMetrics").innerHTML=metric("RSI (14)",fmt(s.rsi),"Observation, not instruction")+metric("Strategy return",pct(s.return_pct),"After stated costs")+metric("Buy & hold",pct(s.buy_hold_return_pct),"Same entry / exit costs")+metric("Strategy drawdown",pct(s.max_drawdown_pct),"Historical simulation");
+ $("rule").textContent=s.rule;
+ $("signalNote").textContent=`${s.band_state}; mean ${fmt(s.mean,2)}, lower ${fmt(s.lower,2)}, upper ${fmt(s.upper,2)}. ${s.note}`;
+ chart("signalChart",s.dates,[{name:"Strategy",values:s.equity},{name:"Buy & hold",values:s.buy_hold,secondary:true}]);
+ $("tradeNote").textContent=`${s.trade_count} entries/exits, including any final liquidation. Showing up to the last 100; ${s.cost_bps} bps charged per side.`;
+ $("tradeRows").innerHTML=s.trades.length?s.trades.map(t=>`<tr><td>${esc(t.date)}</td><td>${esc(t.action)}</td><td class="num">${fmt(t.price,2)}</td><td>${esc(t.reason)}</td></tr>`).join(""):'<tr><td colspan="4">No trades for this rule in the selected period.</td></tr>';
+ $("methodNote").textContent=f.method;
+ const top=f.importance.map((v,i)=>({value:v,name:f.features[i]})).sort((a,b)=>b.value-a.value).slice(0,5);
+ $("importance").innerHTML=top.map(v=>`<div class="bar-row"><span>${esc(v.name)}</span><div class="track"><div class="fill" style="width:${v.value*100}%"></div></div><span>${fmt(v.value*100)}%</span></div>`).join("");
+ renderForecast();
+}
+function renderForecast(){
+ if(!report)return;
+ const f=report.forecast,model=selected(),h=Number($("horizon").value),level=$("band").value;
+ const predictions=f.predictions[model].slice(0,h),bound=f.bounds[model];
+ const lower=level==="none"?null:bound["lower"+level].slice(0,h),upper=level==="none"?null:bound["upper"+level].slice(0,h);
+ const history=report.history_close.slice(-120),dates=[...report.history_dates.slice(-120),...f.dates.slice(0,h)],n=history.length;
+ const forecastValues=[...Array(n-1).fill(null),history.at(-1),...predictions];
+ chart("forecastChart",dates,[{name:"Observed",values:[...history,...Array(h).fill(null)],secondary:true},{name:model,values:forecastValues}],
+ {future:n,lower:lower?[...Array(n).fill(null),...lower]:null,upper:upper?[...Array(n).fill(null),...upper]:null});
+ $("forecastSummary").textContent=`${model} / ${h} future US trading sessions / final-test MAPE ${pct(f.test[model].mape)}`;
+ $("forecastNote").textContent=f.band_note;
+ $("scoreRows").innerHTML=names.map(name=>`<tr class="${name===model?"selected":""}"><td><button class="model-button" data-model="${name}">${name}</button>${name===f.winner?'<span class="badge">BEST</span>':""}</td><td class="num">${pct(f.validation[name].mape)}</td><td class="num">${pct(f.test[name].mape)}</td></tr>`).join("");
+ $("forecastRows").innerHTML=predictions.map((v,i)=>`<tr><td>${f.dates[i]}</td><td class="num">${fmt(v,2)}</td><td class="num">${lower?fmt(lower[i],2):"--"}</td><td class="num">${upper?fmt(upper[i],2):"--"}</td></tr>`).join("");
+}
+function chart(id,dates,series,options={}){
+ const svg=$(id),height=options.height||330,left=65,right=980,top=24,bottom=height-40;
+ if(!dates.length){svg.innerHTML='<text x="60" y="80" fill="var(--cp-text-muted)">Not enough paired observations.</text>';return;}
+ const values=series.flatMap(s=>s.values).concat(options.lower||[],options.upper||[]).filter(v=>v!==null&&Number.isFinite(v));
+ let min=options.range?options.range[0]:Math.min(...values),max=options.range?options.range[1]:Math.max(...values);
+ if(!options.range){const pad=Math.max((max-min)*.12,Math.abs(max)*.01,0.1);min-=pad;max+=pad;}
+ const x=i=>left+i/Math.max(1,dates.length-1)*(right-left),y=v=>bottom-(v-min)/(max-min)*(bottom-top);
+ let html='<rect width="1000" height="'+height+'" fill="var(--cp-surface)"/>';
+ for(let i=0;i<5;i++){const v=min+(max-min)*i/4,yy=y(v);html+=`<line x1="${left}" x2="${right}" y1="${yy}" y2="${yy}" stroke="var(--cp-border)"/><text x="54" y="${yy+4}" text-anchor="end" fill="var(--cp-text-muted)" font-size="11">${fmt(v,options.digits??0)}</text>`;}
+ const step=Math.max(1,Math.ceil(dates.length/7));
+ for(let i=0;i<dates.length;i+=step)html+=`<text x="${x(i)}" y="${height-12}" text-anchor="middle" fill="var(--cp-text-muted)" font-size="10">${dates[i]}</text>`;
+ if(options.future!==undefined){const xx=x(options.future-.5);html+=`<rect x="${xx}" y="${top}" width="${right-xx}" height="${bottom-top}" fill="var(--cp-accent-soft)"/><text x="${Math.min(xx+5,922)}" y="15" font-size="10" fill="var(--cp-accent)">FORECAST</text>`;}
+ if(options.lower){const lo=options.lower.map((v,i)=>v===null?null:`${x(i)},${y(v)}`).filter(Boolean),hi=options.upper.map((v,i)=>v===null?null:`${x(i)},${y(v)}`).filter(Boolean).reverse();html+=`<polygon points="${[...lo,...hi].join(" ")}" fill="var(--cp-highlight)"/>`;}
+ for(const s of series){let path="",open=false;for(let i=0;i<s.values.length;i++){const v=s.values[i];if(v===null||!Number.isFinite(v)){open=false;continue;}path+=`${open?"L":"M"}${x(i).toFixed(2)} ${y(v).toFixed(2)} `;open=true;}html+=`<path d="${path}" fill="none" stroke="${s.secondary?"var(--cp-text-muted)":"var(--cp-accent)"}" stroke-width="${s.secondary?1.8:2.5}" stroke-linejoin="round"/>`;}
+ html+='<g class="cursor" visibility="hidden"><line y1="'+top+'" y2="'+bottom+'" stroke="var(--cp-border-strong)" stroke-dasharray="3 4"/></g>';
+ svg.innerHTML=html;plots.set(id,{dates,series,x,y,left,right,height,index:dates.length-1});svg.parentElement.querySelector(".tip").hidden=true;
+}
+function showPoint(svg,index){
+ const state=plots.get(svg.id);if(!state)return;index=Math.max(0,Math.min(state.dates.length-1,index));state.index=index;
+ const tip=svg.parentElement.querySelector(".tip"),cursor=svg.querySelector(".cursor");
+ tip.textContent=[state.dates[index],...state.series.filter(s=>s.values[index]!==null).map(s=>`${s.name}: ${fmt(s.values[index],2)}`)].join("\n");tip.hidden=false;
+ const rect=svg.getBoundingClientRect();tip.style.left=`${Math.max(0,Math.min(state.x(index)/1000*rect.width+10,rect.width-tip.offsetWidth-4))}px`;tip.style.top="24px";
+ cursor.setAttribute("visibility","visible");cursor.firstElementChild.setAttribute("x1",state.x(index));cursor.firstElementChild.setAttribute("x2",state.x(index));
+}
+for(const svg of document.querySelectorAll(".plot svg")){
+ svg.addEventListener("pointermove",e=>{const s=plots.get(svg.id);if(!s)return;const matrix=svg.getScreenCTM();if(!matrix)return;const point=new DOMPoint(e.clientX,e.clientY).matrixTransform(matrix.inverse());showPoint(svg,Math.round((point.x-s.left)/(s.right-s.left)*(s.dates.length-1)));});
+ svg.addEventListener("pointerleave",()=>{svg.parentElement.querySelector(".tip").hidden=true;svg.querySelector(".cursor")?.setAttribute("visibility","hidden");});
+ svg.addEventListener("keydown",e=>{const s=plots.get(svg.id);if(s&&["ArrowLeft","ArrowRight"].includes(e.key)){e.preventDefault();showPoint(svg,s.index+(e.key==="ArrowLeft"?-1:1));}});
+}
+function changeTab(tab){
+ currentTab=tab;for(const b of document.querySelectorAll("[data-tab]")){b.setAttribute("aria-selected",String(b.dataset.tab===tab));b.tabIndex=b.dataset.tab===tab?0:-1;}
+ for(const id of ["overview","forecast","signals","macro"])$(id).hidden=id!==tab;
+ $("png").disabled=busy||!report||tab==="macro";
+}
+document.querySelector(".tabs").addEventListener("click",e=>{const tab=e.target.closest("[data-tab]");if(tab)changeTab(tab.dataset.tab);});
+document.querySelector(".tabs").addEventListener("keydown",e=>{
+ const tabs=[...document.querySelectorAll("[data-tab]")],index=tabs.indexOf(document.activeElement);
+ if(index<0||!["ArrowLeft","ArrowRight","Home","End"].includes(e.key))return;
+ e.preventDefault();const next=e.key==="Home"?0:e.key==="End"?tabs.length-1:(index+(e.key==="ArrowLeft"?-1:1)+tabs.length)%tabs.length;
+ changeTab(tabs[next].dataset.tab);tabs[next].focus();
+});
+$("scoreRows").addEventListener("click",e=>{const button=e.target.closest("[data-model]");if(button){$("model").value=button.dataset.model;renderForecast();}});
+for(const id of ["model","horizon","band"])$(id).addEventListener("change",renderForecast);
+$("theme").addEventListener("click",()=>{document.documentElement.dataset.theme=document.documentElement.dataset.theme==="dark"?"light":"dark";});
+$("run").addEventListener("click",run);
+$("ticker").addEventListener("keydown",e=>{if(e.key==="Enter")run();});
+$("loadMacro").addEventListener("click",async()=>{
+ if(!report||busy)return;waiting(true);$("error").hidden=true;
+ try{const result=await post("/api/macro",{...activeConfig,as_of:$("vintage").value});$("macroStatus").hidden=result.rows.length>0;$("macroStatus").textContent=result.note;$("macroTable").hidden=!result.rows.length;$("macroNote").textContent=result.note;$("macroRows").innerHTML=result.rows.map(row=>`<tr><td>${esc(row.name)}<br><small>${esc(row.series)}</small></td><td>${esc(row.transform)}</td><td class="num">${fmt(row.correlation,3)}</td><td class="num">${row.observations}</td><td>${esc(row.status)}</td></tr>`).join("");}
+ catch(e){error(e.message);}finally{waiting(false);}
+});
+function download(blob,name){const url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),2000);}
+$("export").addEventListener("click",()=>{
+ const f=report.forecast,m=selected(),h=Number($("horizon").value),level=$("band").value,rows=[["date","ticker","model","adjusted_price",`lower_${level}`,`upper_${level}`,"source"]];
+ for(let i=0;i<h;i++)rows.push([f.dates[i],report.ticker,m,f.predictions[m][i],level==="none"?"":f.bounds[m]["lower"+level][i],level==="none"?"":f.bounds[m]["upper"+level][i],report.mode]);
+ download(new Blob([rows.map(r=>r.join(",")).join("\r\n")],{type:"text/csv"}),`${report.ticker}-forecast.csv`);
+});
+$("png").addEventListener("click",async()=>{
+ try{
+ const id={overview:"overviewChart",forecast:"forecastChart",signals:"signalChart"}[currentTab],svg=$(id).cloneNode(true),height=plots.get(id).height;
+ svg.setAttribute("xmlns","http://www.w3.org/2000/svg");svg.setAttribute("width","1000");svg.setAttribute("height",height);svg.querySelector(".cursor")?.remove();
+ const style=getComputedStyle(document.documentElement),xml=new XMLSerializer().serializeToString(svg).replace(/var\((--cp-[\w-]+)\)/g,(_,key)=>style.getPropertyValue(key).trim()),url=URL.createObjectURL(new Blob([xml],{type:"image/svg+xml"}));
+ try{const image=new Image();image.src=url;await image.decode();const canvas=document.createElement("canvas");canvas.width=2000;canvas.height=height*2+170;const ctx=canvas.getContext("2d");if(!ctx)throw new Error("PNG export is unavailable.");ctx.fillStyle=style.getPropertyValue("--cp-surface");ctx.fillRect(0,0,canvas.width,canvas.height);ctx.fillStyle=style.getPropertyValue("--cp-text");ctx.font='bold 30px "Segoe UI", sans-serif';ctx.fillText(`${report.ticker} / ${currentTab} / ${report.mode==="demo"?"SYNTHETIC DATA":"Yahoo Finance"}`,48,50);ctx.font='20px "Segoe UI", sans-serif';ctx.fillText(`Through ${report.as_of}. Research only; forecasts and historical tests are not guarantees.`,48,88);ctx.drawImage(image,0,120,2000,height*2);const blob=await new Promise(resolve=>canvas.toBlob(resolve,"image/png"));if(!blob)throw new Error("PNG encoding failed.");download(blob,`${report.ticker}-${currentTab}.png`);}finally{URL.revokeObjectURL(url);}
+ }catch(e){error(e.message);}
+});
+changeTab("overview");run();
+</script>
+</body>
+</html>
